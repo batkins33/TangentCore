@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts - Inter (Tangent Forge mid-tier fallback) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    
+    body {
+      background-color: #2B2D31; /* Forge Charcoal */
+      color: #FFFFFF;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Tab Navigation */
+    .tab-active {
+      border-bottom: 3px solid #1098AD; /* Anvil Blue, not orange! */
+      color: #1098AD;
+    }
+    
+    .tab-inactive {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    /* Hero Metric - Orange is OK here for data display */
+    .metric-display {
+      font-family: 'Courier New', monospace;
+      font-size: 3rem;
+      font-weight: 700;
+      color: #D96704; /* Forge Orange - appropriate for metrics */
+      text-align: center;
+      margin: 24px 0;
+    }
+    
+    /* Loading Spinner - Use blue, not orange */
+    .spinner {
+      border: 3px solid #3a3a3a;
+      border-top: 3px solid #1098AD; /* Anvil Blue */
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 32px auto;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Cards */
+    .card {
+      background-color: #1F1F23; /* Deep Charcoal */
+      border: 1px solid #3a3a3a;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    
+    .card-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 16px;
+    }
+    
+    /* Primary Action Button - Smaller with subtle gradient */
+    .btn-primary {
+      background: linear-gradient(135deg, #D96704 0%, #E87805 100%); /* Subtle gradient */
+      color: #FFFFFF;
+      font-weight: 600;
+      padding: 12px 24px; /* Smaller padding */
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      width: auto; /* Not full width */
+      max-width: 180px; /* Smaller max width */
+      font-size: 0.95rem; /* Slightly smaller text */
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(217, 103, 4, 0.2); /* Subtle shadow */
+    }
+    
+    .btn-primary:hover:not(:disabled) {
+      background: linear-gradient(135deg, #E87805 0%, #FF8C1A 100%); /* Brighter on hover */
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(217, 103, 4, 0.35);
+    }
+    
+    .btn-primary:disabled {
+      background: #6B6B6B;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    /* Secondary text */
+    .secondary-text {
+      color: #A8A8A8; /* Smoked Gray */
+    }
+    
+    /* File type grid */
+    .file-type-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    
+    .file-type-item {
+      background-color: #2B2D31;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #3a3a3a;
+      transition: all 0.2s ease;
+    }
+    
+    .file-type-item:hover {
+      border-color: #1098AD; /* Blue hover, not orange */
+      box-shadow: 0 2px 8px rgba(16, 152, 173, 0.15);
+    }
+    
+    .file-type-label {
+      font-size: 0.75rem;
+      color: #A8A8A8;
+      text-transform: uppercase;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    
+    .file-type-count {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      font-family: 'Courier New', monospace;
+      margin-top: 4px;
+    }
+    
+    /* Viral link - Keep orange for CTA */
+    .viral-link {
+      color: #D96704;
+      text-decoration: none;
+      font-size: 0.875rem;
+      text-align: center;
+      display: block;
+      margin-top: 16px;
+      transition: opacity 0.2s;
+    }
+    
+    .viral-link:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+    
+    /* Success badge - Small orange accent */
+    .success-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(217, 103, 4, 0.1);
+      border: 1px solid #D96704;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #D96704;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Navigation Tabs -->
+  <div class="flex border-b border-gray-700" style="background-color: #1F1F23;">
+    <div id="tab-janitor" class="flex-1 text-center py-3 cursor-pointer tab-active" onclick="switchTab('janitor')">
+      <div class="text-xl mb-1">🗑️</div>
+      <div class="text-xs font-semibold">JANITOR</div>
+    </div>
+    <div id="tab-brand" class="flex-1 text-center py-3 tab-inactive">
+      <div class="text-xl mb-1">🎨</div>
+      <div class="text-xs font-semibold">BRAND</div>
+    </div>
+    <div id="tab-ops" class="flex-1 text-center py-3 tab-inactive">
+      <div class="text-xl mb-1">👷</div>
+      <div class="text-xs font-semibold">SITE OPS</div>
+    </div>
+  </div>
+  
+  <!-- Main Content Area -->
+  <div style="padding: 24px;">
+    
+    <!-- Janitor Tab Content -->
+    <div id="content-janitor">
+      
+      <!-- Shared Drive Cleaner Card -->
+      <div class="card">
+        <h2 class="card-title">📁 Shared Drive Cleaner</h2>
+        
+        <!-- Hero Metric Display -->
+        <div id="results-area" class="hidden">
+          <div class="metric-display" id="gb-metric">0 GB</div>
+          <div class="text-center text-sm secondary-text mb-4">Junk Found in Shared Files</div>
+          
+          <!-- Detailed Stats -->
+          <div class="mb-4">
+            <div class="text-sm secondary-text mb-2">
+              <span class="font-semibold text-white" id="file-count">0</span> files scanned
+            </div>
+            
+            <!-- File Types Breakdown -->
+            <div class="file-type-grid" id="file-types-grid">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+          
+          <!-- Success Badge -->
+          <div class="success-badge">
+            ✓ Scan complete
+          </div>
+        </div>
+        
+        <!-- Loading Spinner -->
+        <div id="loading-area" class="hidden">
+          <div class="spinner"></div>
+          <p class="text-center text-sm secondary-text">Scanning shared files...</p>
+        </div>
+        
+        <!-- Scan Button -->
+        <button id="scan-btn" class="btn-primary" onclick="startScan()">
+          🔍 Scan Shared Junk
+        </button>
+        
+        <!-- Viral Hook -->
+        <a href="#" class="viral-link" id="viral-link" style="display: none;">
+          💡 Found junk? Share this tool with a Project Manager.
+        </a>
+      </div>
+      
+    </div>
+    
+    <!-- Brand Tab Content (Disabled) -->
+    <div id="content-brand" class="hidden">
+      <div class="card">
+        <h2 class="card-title secondary-text">🎨 Brand Tools</h2>
+        <p class="secondary-text">Coming soon...</p>
+      </div>
+    </div>
+    
+    <!-- Site Ops Tab Content (Disabled) -->
+    <div id="content-ops" class="hidden">
+      <div class="card">
+        <h2 class="card-title secondary-text">👷 Site Operations</h2>
+        <p class="secondary-text">Coming soon...</p>
+      </div>
+    </div>
+    
+  </div>
+  
+  <script>
+    // Tab switching (only Janitor is active)
+    function switchTab(tab) {
+      if (tab !== 'janitor') return; // Other tabs disabled
+      
+      // Update tab styling
+      document.querySelectorAll('[id^="tab-"]').forEach(el => {
+        el.classList.remove('tab-active');
+      });
+      document.getElementById('tab-' + tab).classList.add('tab-active');
+      
+      // Update content visibility
+      document.querySelectorAll('[id^="content-"]').forEach(el => {
+        el.classList.add('hidden');
+      });
+      document.getElementById('content-' + tab).classList.remove('hidden');
+    }
+    
+    // Start the scan
+    function startScan() {
+      // Disable button
+      var btn = document.getElementById('scan-btn');
+      btn.disabled = true;
+      btn.textContent = 'Scanning...';
+      
+      // Hide results, show loading
+      document.getElementById('results-area').classList.add('hidden');
+      document.getElementById('loading-area').classList.remove('hidden');
+      document.getElementById('viral-link').style.display = 'none';
+      
+      // Call the backend
+      google.script.run
+        .withSuccessHandler(updateUI)
+        .withFailureHandler(handleError)
+        .route('scanShared', null);
+    }
+    
+    // Update UI with results
+    function updateUI(response) {
+      var btn = document.getElementById('scan-btn');
+      btn.disabled = false;
+      btn.textContent = '🔍 Scan Shared Junk';
+      
+      // Hide loading
+      document.getElementById('loading-area').classList.add('hidden');
+      
+      if (response.success) {
+        var data = response.data;
+        
+        // Update hero metric (convert MB to GB)
+        var gbValue = (data.totalSizeMB / 1024).toFixed(2);
+        document.getElementById('gb-metric').textContent = gbValue + ' GB';
+        
+        // Update file count
+        document.getElementById('file-count').textContent = data.totalCount.toLocaleString();
+        
+        // Update file types grid
+        var grid = document.getElementById('file-types-grid');
+        grid.innerHTML = '';
+        
+        for (var type in data.fileTypes) {
+          if (data.fileTypes[type] > 0) {
+            var item = document.createElement('div');
+            item.className = 'file-type-item';
+            item.innerHTML = 
+              '<div class="file-type-label">' + type + '</div>' +
+              '<div class="file-type-count">' + data.fileTypes[type].toLocaleString() + '</div>';
+            grid.appendChild(item);
+          }
+        }
+        
+        // Show results
+        document.getElementById('results-area').classList.remove('hidden');
+        
+        // Show viral link if junk found
+        if (data.totalSizeMB > 0) {
+          document.getElementById('viral-link').style.display = 'block';
+        }
+        
+      } else {
+        alert('Error: ' + response.error);
+      }
+    }
+    
+    // Handle errors
+    function handleError(error) {
+      var btn = document.getElementById('scan-btn');
+      btn.disabled = false;
+      btn.textContent = '🔍 Scan Shared Junk';
+      
+      document.getElementById('loading-area').classList.add('hidden');
+      
+      alert('An error occurred: ' + error.message);
+    }
+  </script>
+  
+</body>
+</html>

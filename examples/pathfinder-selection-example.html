@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PathFinder - Career Selection Example</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    body {
+      background-color: #2B2D31; /* Forge Charcoal - 60% foundation */
+      color: #FFFFFF;
+      padding: 48px 24px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    /* Header */
+    .header {
+      margin-bottom: 48px;
+    }
+    
+    .header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+    }
+    
+    .header p {
+      font-size: 16px;
+      color: #A8A8A8; /* Smoked Gray - 30% content */
+      line-height: 1.5;
+    }
+    
+    /* Question Card */
+    .question-card {
+      background: #1F1F23; /* Deep Charcoal - elevated surface */
+      border: 1px solid #3a3a3a;
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+    
+    .question-card h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 24px;
+    }
+    
+    /* Options Grid */
+    .options-grid {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    
+    /* Option Card - Default State */
+    .option {
+      background: #1F1F23;
+      border: 2px solid #3a3a3a;
+      border-radius: 12px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    
+    .option:hover {
+      border-color: #1098AD; /* Anvil Blue - 10% interaction */
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 152, 173, 0.15);
+    }
+    
+    /* Option Card - SELECTED STATE (Blue gradient, not orange!) */
+    .option.selected {
+      background: linear-gradient(135deg, #0A4D5C 0%, #1098AD 100%); /* Anvil Blue gradient */
+      border: 2px solid #1098AD;
+      box-shadow: 0 4px 16px rgba(16, 152, 173, 0.25);
+    }
+    
+    .option.selected:hover {
+      background: linear-gradient(135deg, #0A4D5C 0%, #1EADC1 100%); /* Lighter on hover */
+      transform: translateY(-2px);
+    }
+    
+    /* Checkmark - ONLY place we use orange in selection */
+    .option .checkmark {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: transparent;
+      border: 2px solid #3a3a3a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      transition: all 0.2s ease;
+    }
+    
+    .option.selected .checkmark {
+      background: #D96704; /* Forge Orange - 5% spark! */
+      border-color: #D96704;
+      color: #FFFFFF;
+    }
+    
+    .option .checkmark::after {
+      content: '';
+    }
+    
+    .option.selected .checkmark::after {
+      content: '✓';
+    }
+    
+    .option h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+      padding-right: 40px; /* Space for checkmark */
+    }
+    
+    .option p {
+      font-size: 14px;
+      color: #A8A8A8; /* Smoked Gray */
+      line-height: 1.5;
+    }
+    
+    .option.selected p {
+      color: rgba(255, 255, 255, 0.9); /* Lighter on blue background */
+    }
+    
+    /* Primary Action Button - Orange, but SMALL and contained */
+    .btn-primary {
+      background: #D96704; /* Forge Orange - action spark */
+      color: #FFFFFF;
+      border: none;
+      border-radius: 8px;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      max-width: 200px; /* CONTAINED, not full-width! */
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .btn-primary:hover {
+      background: #E87805; /* Ember Glow */
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(217, 103, 4, 0.3);
+    }
+    
+    .btn-primary:disabled {
+      background: #6B6B6B;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    /* Secondary Button - Transparent with blue border */
+    .btn-secondary {
+      background: transparent;
+      color: #1098AD; /* Anvil Blue */
+      border: 2px solid #1098AD;
+      border-radius: 8px;
+      padding: 14px 30px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(16, 152, 173, 0.1);
+      border-color: #1EADC1;
+      color: #1EADC1;
+    }
+    
+    /* Button Group */
+    .button-group {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    
+    /* Progress Indicator */
+    .progress {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #3a3a3a;
+      transition: all 0.2s ease;
+    }
+    
+    .progress-dot.active {
+      background: #1098AD; /* Blue for progress */
+      width: 24px;
+      border-radius: 4px;
+    }
+    
+    .progress-dot.complete {
+      background: #D96704; /* Orange for completed */
+    }
+    
+    /* Info Badge - Small orange accent */
+    .info-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(217, 103, 4, 0.1);
+      border: 1px solid #D96704;
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #D96704;
+      margin-top: 16px;
+    }
+    
+    .info-badge::before {
+      content: '💡';
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    
+    <!-- Progress Indicator -->
+    <div class="progress">
+      <div class="progress-dot complete"></div>
+      <div class="progress-dot complete"></div>
+      <div class="progress-dot active"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+    </div>
+    
+    <!-- Header -->
+    <div class="header">
+      <h1>What are your top strengths?</h1>
+      <p>Select the two qualities you most want colleges to understand about you. This helps us match you with the right career paths.</p>
+    </div>
+    
+    <!-- Question Card -->
+    <div class="question-card">
+      <h2>Choose 2 options</h2>
+      
+      <div class="options-grid">
+        
+        <!-- Option 1 - Selected (Blue gradient with orange checkmark) -->
+        <div class="option selected" onclick="toggleOption(this)">
+          <div class="checkmark"></div>
+          <h3>Creative Problem Solver</h3>
+          <p>You think outside the box and find innovative solutions to complex challenges.</p>
+        </div>
+        
+        <!-- Option 2 - Default -->
+        <div class="option" onclick="toggleOption(this)">
+          <div class="checkmark"></div>
+          <h3>Natural Leader</h3>
+          <p>You inspire and guide others, taking initiative in group settings.</p>
+        </div>
+        
+        <!-- Option 3 - Selected (Blue gradient with orange checkmark) -->
+        <div class="option selected" onclick="toggleOption(this)">
+          <div class="checkmark"></div>
+          <h3>Detail-Oriented Analyst</h3>
+          <p>You excel at breaking down complex information and spotting patterns.</p>
+        </div>
+        
+        <!-- Option 4 - Default -->
+        <div class="option" onclick="toggleOption(this)">
+          <div class="checkmark"></div>
+          <h3>Empathetic Communicator</h3>
+          <p>You connect with people easily and understand diverse perspectives.</p>
+        </div>
+        
+      </div>
+      
+      <!-- Info Badge - Small orange accent -->
+      <div class="info-badge">
+        Your selections help us personalize your career recommendations
+      </div>
+      
+      <!-- Buttons -->
+      <div class="button-group" style="margin-top: 32px;">
+        <button class="btn-secondary">← Back</button>
+        <button class="btn-primary">
+          Continue →
+        </button>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+  <script>
+    function toggleOption(element) {
+      const selected = document.querySelectorAll('.option.selected');
+      
+      // If clicking an already selected item, deselect it
+      if (element.classList.contains('selected')) {
+        element.classList.remove('selected');
+        return;
+      }
+      
+      // If already have 2 selected, deselect the first one
+      if (selected.length >= 2) {
+        selected[0].classList.remove('selected');
+      }
+      
+      // Select the clicked option
+      element.classList.add('selected');
+    }
+  </script>
+  
+</body>
+</html>
