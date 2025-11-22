@@ -109,6 +109,37 @@ tangent-forge-utilities/
 - **Safety first**: Read-only operations in alpha
 - **Scalable architecture**: Modular design for easy expansion
 
+## 🤖 For AI Coding Assistants
+
+This repository includes comprehensive instructions for AI coding assistants.
+
+**Before generating code, AI agents should:**
+- Read [`.ai/PROJECT_CONTEXT.md`](.ai/PROJECT_CONTEXT.md) - Complete project context
+- Follow established patterns (revealing module, central router, drive iterator)
+- Respect alpha constraints (read-only operations, 500-file limit)
+- Return standardized responses: `{ success: true/false, data/error }`
+
+**For developers using AI tools:**
+- **Cursor IDE**: Uses `.cursorrules` → symlinked to `.ai/PROJECT_CONTEXT.md`
+- **GitHub Copilot**: Uses `.github/copilot-instructions.md` → symlinked to `.ai/PROJECT_CONTEXT.md`
+- **ChatGPT/Claude**: Paste [`.ai/PROJECT_CONTEXT.md`](.ai/PROJECT_CONTEXT.md) for project context
+- **Codebase Audit**: Use [`.ai/AUDIT_PROMPT.md`](.ai/AUDIT_PROMPT.md) template for comprehensive analysis
+
+**Additional resources:**
+- [Documentation Standards](.ai/DOCUMENTATION_STANDARDS.md) - Best practices and templates
+- [Repo Hygiene Checklist](.ai/REPO_HYGIENE_CHECKLIST.md) - Maintenance guidelines
+- [AI Instructions Overview](.ai/README.md) - Complete guide to `.ai/` directory
+
+## 📚 Documentation
+
+Comprehensive documentation is available in the `/docs` directory:
+
+- **[User Guide](docs/USER_GUIDE.md)** - End-user documentation
+- **[API Reference](docs/API.md)** - Complete API documentation
+- **[Technical Architecture](docs/TECHNICAL.md)** - System design and patterns
+- **[Contributing Guide](CONTRIBUTING.md)** - How to contribute
+- **[Brand Guidelines](BRAND_GUIDELINES.md)** - Design system and standards
+
 ## 📝 Notes
 
 - The `driveIterator` function is **critical** for preventing timeout issues

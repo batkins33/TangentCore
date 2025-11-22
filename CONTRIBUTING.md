@@ -194,6 +194,76 @@ function myFunction(param1, param2) {
 
 ---
 
+## 🤖 Working with AI Coding Assistants
+
+This repository provides comprehensive context for AI coding tools to ensure consistent, high-quality code generation.
+
+### AI Instructions Directory
+
+All AI-related instructions are in the **`.ai/`** directory:
+
+- **[PROJECT_CONTEXT.md](.ai/PROJECT_CONTEXT.md)** - Complete project context and coding standards
+- **[DOCUMENTATION_STANDARDS.md](.ai/DOCUMENTATION_STANDARDS.md)** - Documentation templates and guidelines
+- **[REPO_HYGIENE_CHECKLIST.md](.ai/REPO_HYGIENE_CHECKLIST.md)** - Code review and maintenance checklist
+- **[AUDIT_PROMPT.md](.ai/AUDIT_PROMPT.md)** - Template for comprehensive codebase audits
+
+### For AI Agents
+
+**Before generating code, AI tools MUST:**
+1. Read [`.ai/PROJECT_CONTEXT.md`](.ai/PROJECT_CONTEXT.md) completely
+2. Use revealing module pattern for all modules
+3. Use `driveIterator()` for all Drive queries (prevents timeout)
+4. Return standardized format: `{ success: true/false, data/error }`
+5. Add JSDoc comments for public functions
+6. Include try-catch error handling
+7. Respect alpha constraints (read-only, 500-file limit)
+8. Follow ES5 syntax (no ES6+ features)
+
+### For Developers Using AI Tools
+
+**Cursor IDE:**
+```bash
+# Already configured via .cursorrules symlink
+# Cursor automatically reads .ai/PROJECT_CONTEXT.md
+```
+
+**GitHub Copilot:**
+```bash
+# Already configured via .github/copilot-instructions.md symlink
+# Copilot automatically reads .ai/PROJECT_CONTEXT.md
+```
+
+**ChatGPT / Claude / Other LLMs:**
+```bash
+# Copy .ai/PROJECT_CONTEXT.md and paste as context
+# For audits, use .ai/AUDIT_PROMPT.md template
+```
+
+### Code Review with AI Context
+
+When reviewing code (human or AI-generated), verify:
+
+- [ ] Follows patterns in `.ai/PROJECT_CONTEXT.md`
+- [ ] Uses revealing module pattern
+- [ ] Includes proper error handling
+- [ ] Has JSDoc documentation
+- [ ] Returns standardized response format
+- [ ] Respects alpha safety limits
+- [ ] Uses ES5 syntax only
+- [ ] No hard-coded configuration values
+- [ ] Passes checklist in `.ai/REPO_HYGIENE_CHECKLIST.md`
+
+### Updating AI Instructions
+
+When project standards change:
+
+1. Update relevant file in `.ai/` directory
+2. Document change in commit message
+3. Update symlinks if file structure changes
+4. Notify team of new standards
+
+---
+
 ## 🎨 Design Guidelines
 
 ### Follow Tangent Forge Brand
