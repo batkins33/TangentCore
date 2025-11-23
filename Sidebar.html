@@ -100,7 +100,7 @@
     
     /* Primary Action Button - Orange spark with refined styling */
     .btn-primary {
-      background: linear-gradient(135deg, #D96704 0%, #E87805 100%); /* Forge Orange gradient */
+      background: linear-gradient(135deg, #B85503 0%, #D96704 100%); /* Darker to Forge Orange */
       color: #FFFFFF;
       font-weight: 600;
       padding: 14px 28px; /* Refined padding */
@@ -115,7 +115,7 @@
     }
 
     .btn-primary:hover:not(:disabled) {
-      background: linear-gradient(135deg, #E87805 0%, #FF8C1A 100%); /* Brighter on hover */
+      background: linear-gradient(135deg, #D96704 0%, #FF8C1A 100%); /* Brighter on hover */
       transform: translateY(-2px);
       box-shadow: 0 4px 16px rgba(217, 103, 4, 0.4);
       border-color: rgba(217, 103, 4, 0.5);
@@ -204,33 +204,33 @@
 </head>
 <body>
   
-  <!-- TF Branding Header -->
-  <div style="background-color: #1F1F23; padding: 16px 24px; border-bottom: 1px solid #3a3a3a;">
-    <div style="display: flex; align-items: center; gap: 12px;">
-      <!-- TF Monogram from official brand assets -->
-      <svg width="32" height="32" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <path d="M40 60 H160 L145 85 H95 V160 L75 140 V85 H40 Z" fill="#D96704"/>
+  <!-- TF Branding Header - Complete Block from docs/assets/TF_utility_block-2.svg -->
+  <div style="background-color: #1e1e1e; border-bottom: 1px solid #3a3a3a; padding: 12px 0;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="64" viewBox="0 0 300 64" preserveAspectRatio="xMinYMid meet">
+      <rect width="300" height="64" fill="#1e1e1e"/>
+      <svg x="12" y="10" width="44" height="44" viewBox="128 128 240 224">
+        <path d="M128 128 H368 L336 176 H256 V216 H312 L288 256 H256 V312 L208 352 V176 H128 V128 Z" fill="#F47C26"/>
       </svg>
-      <div>
-        <div style="font-size: 14px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.5px;">TANGENT FORGE</div>
-        <div style="font-size: 11px; font-weight: 500; color: #A8A8A8; letter-spacing: 0.3px;">UTILITIES</div>
-      </div>
-    </div>
+      <g transform="translate(68, 0)">
+        <text x="0" y="30" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="20" fill="#FFFFFF" letter-spacing="0.01em">TANGENT FORGE</text>
+        <text x="1" y="46" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="500" font-size="11" fill="#AAAAAA" letter-spacing="0.2em">UTILITIES</text>
+      </g>
+    </svg>
   </div>
   
   <!-- Navigation Tabs -->
   <div class="flex border-b border-gray-700" style="background-color: #1F1F23;">
     <div id="tab-janitor" class="tab flex-1 text-center py-3 cursor-pointer tab-active" onclick="switchTab('janitor')">
       <i data-lucide="trash-2" class="tab-icon"></i>
-      <div class="text-xs font-semibold">JANITOR</div>
+      <div class="text-xs font-semibold">CLEANUP</div>
     </div>
     <div id="tab-brand" class="tab flex-1 text-center py-3 tab-inactive">
       <i data-lucide="palette" class="tab-icon"></i>
       <div class="text-xs font-semibold">BRAND</div>
     </div>
     <div id="tab-ops" class="tab flex-1 text-center py-3 tab-inactive">
-      <i data-lucide="hard-hat" class="tab-icon"></i>
-      <div class="text-xs font-semibold">SITE OPS</div>
+      <i data-lucide="workflow" class="tab-icon"></i>
+      <div class="text-xs font-semibold">WORKFLOW</div>
     </div>
   </div>
   
@@ -299,10 +299,10 @@
       </div>
     </div>
     
-    <!-- Site Ops Tab Content (Disabled) -->
+    <!-- Workflow Tab Content (Disabled) -->
     <div id="content-ops" class="hidden">
       <div class="card">
-        <h2 class="card-title secondary-text">👷 Site Operations</h2>
+        <h2 class="card-title secondary-text">⚙️ Workflow Automation</h2>
         <p class="secondary-text">Coming soon...</p>
       </div>
     </div>

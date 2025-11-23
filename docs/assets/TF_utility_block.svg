@@ -1,0 +1,18 @@
+<!-- Updated TF Utility block (from gemini convert) -->
+<svg xmlns="http://www.w3.org/2000/svg" width="350" height="80" viewBox="0 0 350 80">
+  <rect width="350" height="80" fill="#1e1e1e"/>
+  
+  <path transform="translate(20, 10) scale(0.12)" 
+        d="M128 128 H368 L336 176 H256 V216 H312 L288 256 H256 V312 L208 352 V176 H128 V128 Z" 
+        fill="#F47C26"/>
+
+  <g transform="translate(80, 48)">
+    <text font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="24" fill="#FFFFFF" letter-spacing="0.02em">
+      TANGENT FORGE
+    </text>
+    
+    <text x="1" y="20" font-family="Arial, Helvetica, sans-serif" font-weight="500" font-size="14" fill="#AAAAAA" letter-spacing="0.25em">
+      UTILITIES
+    </text>
+  </g>
+</svg>
