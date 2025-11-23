@@ -27,8 +27,8 @@
     
     /* Tab Navigation */
     .tab-active {
-      border-bottom: 3px solid #1098AD; /* Anvil Blue, not orange! */
-      color: #1098AD;
+      border-bottom: 3px solid #8B5A3C; /* Dark Copper - industrial accent */
+      color: #A67C52; /* Copper Sheen */
     }
     
     .tab-inactive {
@@ -46,10 +46,10 @@
       margin: 24px 0;
     }
     
-    /* Loading Spinner - Use blue, not orange */
+    /* Loading Spinner - Copper for industrial feel */
     .spinner {
       border: 3px solid #3a3a3a;
-      border-top: 3px solid #1098AD; /* Anvil Blue */
+      border-top: 3px solid #8B5A3C; /* Dark Copper */
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -78,26 +78,31 @@
       margin-bottom: 16px;
     }
     
-    /* Primary Action Button - Smaller with subtle gradient */
+    /* Primary Action Button - Forged copper with metallic sheen */
     .btn-primary {
-      background: linear-gradient(135deg, #D96704 0%, #E87805 100%); /* Subtle gradient */
+      background: linear-gradient(135deg, #6B4423 0%, #8B5A3C 100%); /* Forged Bronze → Dark Copper */
       color: #FFFFFF;
       font-weight: 600;
-      padding: 12px 24px; /* Smaller padding */
+      padding: 14px 28px; /* Refined padding */
       border-radius: 8px;
-      border: none;
+      border: 1px solid rgba(166, 124, 82, 0.3); /* Subtle copper rim */
       cursor: pointer;
-      width: auto; /* Not full width */
-      max-width: 180px; /* Smaller max width */
-      font-size: 0.95rem; /* Slightly smaller text */
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 8px rgba(217, 103, 4, 0.2); /* Subtle shadow */
+      width: auto;
+      max-width: 220px; /* Slightly wider for refinement */
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      box-shadow:
+        0 2px 8px rgba(107, 68, 35, 0.3),
+        inset 0 0 20px rgba(166, 124, 82, 0.15); /* Metallic inner glow */
     }
-    
+
     .btn-primary:hover:not(:disabled) {
-      background: linear-gradient(135deg, #E87805 0%, #FF8C1A 100%); /* Brighter on hover */
+      background: linear-gradient(135deg, #8B5A3C 0%, #A67C52 100%); /* Copper Sheen on hover */
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(217, 103, 4, 0.35);
+      box-shadow:
+        0 4px 16px rgba(139, 90, 60, 0.4),
+        inset 0 0 20px rgba(166, 124, 82, 0.25); /* Enhanced metallic glow */
+      border-color: rgba(166, 124, 82, 0.5);
     }
     
     .btn-primary:disabled {
@@ -129,8 +134,8 @@
     }
     
     .file-type-item:hover {
-      border-color: #1098AD; /* Blue hover, not orange */
-      box-shadow: 0 2px 8px rgba(16, 152, 173, 0.15);
+      border-color: #A67C52; /* Copper Sheen hover */
+      box-shadow: 0 2px 8px rgba(139, 90, 60, 0.2);
     }
     
     .file-type-label {
