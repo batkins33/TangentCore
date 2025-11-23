@@ -8,6 +8,9 @@
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
+  <!-- Lucide Icons - Lightweight SVG icon library -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
   <!-- Google Fonts - Inter (Tangent Forge mid-tier fallback) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,6 +29,15 @@
     }
     
     /* Tab Navigation */
+    .tab {
+      transition: all 0.2s ease;
+    }
+    
+    .tab:not(.tab-inactive):hover {
+      background-color: rgba(166, 124, 82, 0.05); /* Subtle copper tint */
+      transform: translateY(-1px);
+    }
+    
     .tab-active {
       border-bottom: 3px solid #A67C52; /* Copper Sheen - warm but subtle */
       color: #A67C52; /* Copper Sheen */
@@ -34,6 +46,14 @@
     .tab-inactive {
       opacity: 0.5;
       cursor: not-allowed;
+    }
+    
+    /* Tab icons */
+    .tab-icon {
+      width: 20px;
+      height: 20px;
+      margin: 0 auto 4px;
+      stroke-width: 2;
     }
     
     /* Hero Metric - Orange is OK here for data display */
@@ -184,18 +204,32 @@
 </head>
 <body>
   
+  <!-- TF Branding Header -->
+  <div style="background-color: #1F1F23; padding: 16px 24px; border-bottom: 1px solid #3a3a3a;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <!-- TF Monogram from official brand assets -->
+      <svg width="32" height="32" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40 60 H160 L145 85 H95 V160 L75 140 V85 H40 Z" fill="#D96704"/>
+      </svg>
+      <div>
+        <div style="font-size: 14px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.5px;">TANGENT FORGE</div>
+        <div style="font-size: 11px; font-weight: 500; color: #A8A8A8; letter-spacing: 0.3px;">UTILITIES</div>
+      </div>
+    </div>
+  </div>
+  
   <!-- Navigation Tabs -->
   <div class="flex border-b border-gray-700" style="background-color: #1F1F23;">
-    <div id="tab-janitor" class="flex-1 text-center py-3 cursor-pointer tab-active" onclick="switchTab('janitor')">
-      <div class="text-xl mb-1">🗑️</div>
+    <div id="tab-janitor" class="tab flex-1 text-center py-3 cursor-pointer tab-active" onclick="switchTab('janitor')">
+      <i data-lucide="trash-2" class="tab-icon"></i>
       <div class="text-xs font-semibold">JANITOR</div>
     </div>
-    <div id="tab-brand" class="flex-1 text-center py-3 tab-inactive">
-      <div class="text-xl mb-1">🎨</div>
+    <div id="tab-brand" class="tab flex-1 text-center py-3 tab-inactive">
+      <i data-lucide="palette" class="tab-icon"></i>
       <div class="text-xs font-semibold">BRAND</div>
     </div>
-    <div id="tab-ops" class="flex-1 text-center py-3 tab-inactive">
-      <div class="text-xl mb-1">👷</div>
+    <div id="tab-ops" class="tab flex-1 text-center py-3 tab-inactive">
+      <i data-lucide="hard-hat" class="tab-icon"></i>
       <div class="text-xs font-semibold">SITE OPS</div>
     </div>
   </div>
@@ -208,7 +242,10 @@
       
       <!-- Shared Drive Cleaner Card -->
       <div class="card">
-        <h2 class="card-title">📁 Shared Drive Cleaner</h2>
+        <h2 class="card-title" style="display: flex; align-items: center; gap: 8px;">
+          <i data-lucide="folder-open" style="width: 20px; height: 20px; color: #A67C52;"></i>
+          <span>Shared Drive Cleaner</span>
+        </h2>
         
         <!-- Hero Metric Display -->
         <div id="results-area" class="hidden">
@@ -240,13 +277,15 @@
         </div>
         
         <!-- Scan Button -->
-        <button id="scan-btn" class="btn-primary" onclick="startScan()">
-          🔍 Scan Shared Junk
+        <button id="scan-btn" class="btn-primary" onclick="startScan()" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0 auto;">
+          <i data-lucide="search" style="width: 16px; height: 16px;"></i>
+          <span>Scan Shared Junk</span>
         </button>
         
         <!-- Viral Hook -->
-        <a href="#" class="viral-link" id="viral-link" style="display: none;">
-          💡 Found junk? Share this tool with a Project Manager.
+        <a href="#" class="viral-link" id="viral-link" style="display: none; align-items: center; justify-content: center; gap: 6px;">
+          <i data-lucide="lightbulb" style="width: 14px; height: 14px;"></i>
+          <span>Found junk? Share this tool with a Project Manager.</span>
         </a>
       </div>
       
@@ -311,7 +350,8 @@
     function updateUI(response) {
       var btn = document.getElementById('scan-btn');
       btn.disabled = false;
-      btn.textContent = '🔍 Scan Shared Junk';
+      btn.innerHTML = '<i data-lucide="search" style="width: 16px; height: 16px;"></i><span>Scan Shared Junk</span>';
+      lucide.createIcons(); // Re-render icons
       
       // Hide loading
       document.getElementById('loading-area').classList.add('hidden');
@@ -358,12 +398,21 @@
     function handleError(error) {
       var btn = document.getElementById('scan-btn');
       btn.disabled = false;
-      btn.textContent = '🔍 Scan Shared Junk';
+      btn.innerHTML = '<i data-lucide="search" style="width: 16px; height: 16px;"></i><span>Scan Shared Junk</span>';
+      lucide.createIcons(); // Re-render icons
       
       document.getElementById('loading-area').classList.add('hidden');
       
       alert('An error occurred: ' + error.message);
     }
+  </script>
+  
+  <!-- Initialize Lucide Icons -->
+  <script>
+    // Initialize all Lucide icons after DOM loads
+    document.addEventListener('DOMContentLoaded', function() {
+      lucide.createIcons();
+    });
   </script>
   
 </body>
