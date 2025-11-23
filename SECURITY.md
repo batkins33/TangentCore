@@ -6,7 +6,8 @@ We release security updates for the following versions:
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 1.0.x-alpha | ✅ Active development |
+| 2.0.x-alpha | ✅ Active development (Current) |
+| 1.0.x-alpha | ❌ Deprecated |
 
 **Note:** TangentCore is currently in alpha. Security updates are applied to the latest alpha version only.
 
@@ -18,27 +19,49 @@ We release security updates for the following versions:
 
 TangentCore is designed with privacy-first principles:
 
-- **Read-Only Operations** - Alpha version performs only read operations (no file deletion or modification)
+- **Scan-Only Operations** - v2 alpha performs scans only (deletion features planned for future release)
 - **No Data Storage** - All processing happens in-memory; no user data is stored
 - **No File Content Access** - Only metadata is accessed (file names, sizes, types)
-- **Minimal OAuth Scopes** - Requests only the permissions necessary for functionality
+- **Full Transparency** - All API calls are logged for auditability
+- **Enterprise Features** - Includes Shared Drive (Team Drive) access for organizational use
 
-### OAuth Scopes
+### OAuth Scopes (v2)
 
-TangentCore requests the following minimal scopes:
+**⚠️ Permission Changes in v2.0.0-alpha:**
 
-1. **`https://www.googleapis.com/auth/drive.readonly`**
-   - Purpose: Read-only access to Drive metadata
-   - Access: File names, sizes, types, sharing status
-   - Does NOT access: File contents
+TangentCore now requests the following scopes:
 
-2. **`https://www.googleapis.com/auth/spreadsheets.currentonly`**
-   - Purpose: Access to the spreadsheet where add-on is opened
-   - Scope: Current spreadsheet only
+1. **`https://www.googleapis.com/auth/drive`**
+   - Purpose: Full Drive access (read, write, delete)
+   - Access: File metadata and future deletion capabilities
+   - **Why upgraded:** Required for planned cleanup/deletion features
+   - **Current use:** File metadata scanning only (scan-only in v2 alpha)
+   - Does NOT currently: Modify or delete files (planned for future)
+   - Includes: Shared Drive (Team Drive) support
+
+2. **`https://www.googleapis.com/auth/userinfo.email`**
+   - Purpose: User identity verification
+   - Access: User's email address only
+   - **Why needed:** License validation and activity logging
 
 3. **`https://www.googleapis.com/auth/script.container.ui`**
    - Purpose: Display sidebar interface
    - Scope: UI rendering only
+
+### Security Rationale
+
+**Why Full Drive Access?**
+
+We understand this is a significant permission. Here's our reasoning:
+
+- **Future-Proofing:** Deletion features are the core value proposition of a "Cleanup" tool
+- **User Experience:** Avoids requiring re-authorization when cleanup features launch
+- **Transparency:** Current alpha version only scans; deletion coming in future update
+- **Google Best Practice:** Request permissions upfront rather than surprising users later
+
+**Migration from v1:**
+- v1 users must re-authorize to grant new permissions
+- No automatic upgrade; explicit user consent required
 
 ### Transparency
 
@@ -80,6 +103,16 @@ Please provide as much information as possible:
 4. **Potential impact** (what could an attacker do?)
 5. **Suggested fix** (if you have one)
 6. **Your contact information** (for follow-up)
+
+### High-Priority Security Concerns for v2
+
+Given the elevated permissions in v2, we're especially interested in reports related to:
+
+- Unauthorized file modifications or deletions
+- OAuth scope abuse or misuse
+- Shared Drive permission escalation
+- User identity exposure beyond email
+- Cross-organization data leakage
 
 ### Example Report
 

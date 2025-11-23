@@ -2,13 +2,17 @@
 
 A professional Google Workspace Add-on with a monolith architecture containing multiple utility modules.
 
+**Version:** 2.0.0-alpha  
+**Compatible with:** Sheets, Docs, Slides, Forms  
+**Enterprise Ready:** Includes Shared Drive support
+
 ## 🏗️ Architecture
 
 This project uses a **Monolith Architecture** where one add-on contains multiple modules:
 
-- **Janitor Module**: Shared Drive Cleaner (Active)
+- **Cleanup Module**: Shared Drive Cleaner (Active)
 - **Brand Module**: Brand management tools (Coming Soon)
-- **Site Ops Module**: Site operations utilities (Coming Soon)
+- **Workflow Module**: Automation utilities (Coming Soon)
 
 ## 📁 Project Structure
 
@@ -29,14 +33,16 @@ tangent-forge-utilities/
 - **`logActivity(user, tool, action)`**: Structured activity logging
 - **`driveIterator(query, token, batchSize)`**: **CRITICAL** - Robust pagination handler that prevents 6-minute timeout issues
 
-### Cleaner Module (Alpha)
+### Cleanup Module (v2)
 
-- **Read-only scanning** of "Shared with Me" files
+- **Full Drive access** for "Shared with Me" files (preparing for deletion features)
+- **Shared Drive support** - scans Team Drive files
 - **500-file hard cap** for speed in alpha version
+- **Enhanced file detection** - Excel, Word, PowerPoint, CSV support
 - Returns analytics:
   - Total file count
   - Total size in MB
-  - File type breakdown (PDF, Sheets, Docs, Images, etc.)
+  - File type breakdown (PDF, Sheets, Docs, Images, Excel, Word, PowerPoint, etc.)
 
 ### UI Design
 
@@ -45,7 +51,9 @@ tangent-forge-utilities/
   - Accent: `#D96704` (Forge Orange)
   - Secondary text: `#A8A8A8` (Smoked Gray)
   - Font: Inter (mid-tier fallback)
-- **Tabbed Navigation**: Janitor (active), Brand (disabled), Site Ops (disabled)
+- **Tabbed Navigation**: CLEANUP (active), BRAND (disabled), WORKFLOW (disabled)
+  - Professional tab labels with Lucide SVG icons
+  - Official TF brand header with Inter font
 - **Hero Metrics**: Large, monospaced display of GB found
 - **Viral Hook**: "Found junk? Share this tool with a Project Manager"
 - **Layout**: 24px baseline grid, 16px card radius (TF standards)
@@ -71,31 +79,43 @@ tangent-forge-utilities/
 
 ## 📊 Usage
 
-1. Open any Google Sheet
-2. Click **Tangent Forge** → **Open Utilities**
-3. In the sidebar, click **"🔍 Scan Shared Junk"**
-4. View results showing total GB and file breakdown
+1. Open any **Google Sheet, Doc, Slide, or Form**
+2. Click **Add-ons** (or **Extensions**) → **Tangent Forge** → **Open Utilities**
+3. In the sidebar, navigate to **CLEANUP** tab
+4. Click **"Scan Shared Junk"** button
+5. View results showing total GB and file breakdown (includes Shared Drive files)
 
 ## 🔐 OAuth Scopes
 
-- `drive.readonly` - Read-only access to Drive files
-- `spreadsheets.currentonly` - Access to current spreadsheet
+**⚠️ v2 Permission Changes** - Upgraded for future deletion functionality:
+
+- `drive` - **Full Drive access** (read, write, delete) - Required for cleanup features
+- `userinfo.email` - User identity for license validation
 - `script.container.ui` - Display sidebar UI
+
+> **Note:** Users upgrading from v1 will need to re-authorize with the new permissions.
 
 ## 🎯 Alpha Version Limitations
 
 - **500-file cap**: Ensures fast scanning for initial testing
-- **Read-only**: No deletion functionality (safety first)
-- **Single module active**: Only Janitor module is functional
+- **Scan-only**: Deletion functionality coming in future release
+- **Single module active**: Only Cleanup module is functional
 
 ## 🗺️ Roadmap
 
-### Phase 1 (Current - Alpha)
+### Phase 1 ✅ Complete (v1.0.0-alpha)
 - ✅ Core architecture with TangentCore
 - ✅ Drive iterator with timeout protection
 - ✅ Shared Drive Cleaner (read-only)
 - ✅ Industrial dark mode UI
-- 🎯 **Next**: Submit to Google for Publisher ID approval
+
+### Phase 1.5 ✅ Complete (v2.0.0-alpha)
+- ✅ Multi-app support (Sheets, Docs, Slides, Forms)
+- ✅ Shared Drive (Team Drive) scanning
+- ✅ Enhanced file type detection (Microsoft formats)
+- ✅ Full Drive permissions for future cleanup
+- ✅ TF brand alignment with official assets
+- 🎯 **Next**: Implement deletion/cleanup functionality
 
 ### Phase 2 (Bluebeam Bridge)
 - 📋 Google Cloud Run container (Python + DocTR/PyPDF2)
