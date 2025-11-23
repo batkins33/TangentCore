@@ -80,6 +80,12 @@ function route(action, payload) {
         }
         return CleanupModule.scanSharedFiles();
 
+      // --- MODULE: MANIFEST ---
+      case "generateManifest":
+        // License check: 'free' tier is allowed, so just proceed
+        // (If you had a premium check, it would go here)
+        return ManifestModule.generateManifest();
+
       // --- MODULE: SYSTEM ---
       case "getLicense":
         return { success: true, data: license };

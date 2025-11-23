@@ -1,419 +1,590 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <base target="_top">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Lucide Icons - Lightweight SVG icon library -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  
-  <!-- Google Fonts - Inter (Tangent Forge mid-tier fallback) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    * {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-    
-    body {
-      background-color: #2B2D31; /* Forge Charcoal */
-      color: #FFFFFF;
-      margin: 0;
-      padding: 0;
-    }
-    
-    /* Tab Navigation */
-    .tab {
-      transition: all 0.2s ease;
-    }
-    
-    .tab:not(.tab-inactive):hover {
-      background-color: rgba(166, 124, 82, 0.05); /* Subtle copper tint */
-      transform: translateY(-1px);
-    }
-    
-    .tab-active {
-      border-bottom: 3px solid #A67C52; /* Copper Sheen - warm but subtle */
-      color: #A67C52; /* Copper Sheen */
-    }
-    
-    .tab-inactive {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    
-    /* Tab icons */
-    .tab-icon {
-      width: 20px;
-      height: 20px;
-      margin: 0 auto 4px;
-      stroke-width: 2;
-    }
-    
-    /* Hero Metric - Orange is OK here for data display */
-    .metric-display {
-      font-family: 'Courier New', monospace;
-      font-size: 3rem;
-      font-weight: 700;
-      color: #D96704; /* Forge Orange - appropriate for metrics */
-      text-align: center;
-      margin: 24px 0;
-    }
-    
-    /* Loading Spinner - Copper accent */
-    .spinner {
-      border: 3px solid #3a3a3a;
-      border-top: 3px solid #A67C52; /* Copper Sheen - lighter */
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 32px auto;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    /* Cards */
-    .card {
-      background-color: #1F1F23; /* Deep Charcoal */
-      border: 1px solid #3a3a3a;
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 16px;
-    }
-    
-    .card-title {
-      font-size: 20px;
-      font-weight: 600;
-      color: #FFFFFF;
-      margin-bottom: 16px;
-    }
-    
-    /* Primary Action Button - Orange spark with refined styling */
-    .btn-primary {
-      background: linear-gradient(135deg, #B85503 0%, #D96704 100%); /* Darker to Forge Orange */
-      color: #FFFFFF;
-      font-weight: 600;
-      padding: 14px 28px; /* Refined padding */
-      border-radius: 8px;
-      border: 1px solid rgba(217, 103, 4, 0.3); /* Subtle orange rim */
-      cursor: pointer;
-      width: auto;
-      max-width: 220px; /* Refined width */
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(217, 103, 4, 0.25);
-    }
+  <head>
+    <base target="_top" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    .btn-primary:hover:not(:disabled) {
-      background: linear-gradient(135deg, #D96704 0%, #FF8C1A 100%); /* Brighter on hover */
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(217, 103, 4, 0.4);
-      border-color: rgba(217, 103, 4, 0.5);
-    }
-    
-    .btn-primary:disabled {
-      background: #6B6B6B;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-    
-    /* Secondary text */
-    .secondary-text {
-      color: #A8A8A8; /* Smoked Gray */
-    }
-    
-    /* File type grid */
-    .file-type-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 16px;
-    }
-    
-    .file-type-item {
-      background-color: #2B2D31;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #3a3a3a;
-      transition: all 0.2s ease;
-    }
-    
-    .file-type-item:hover {
-      border-color: #A67C52; /* Copper Sheen hover */
-      box-shadow: 0 2px 8px rgba(139, 90, 60, 0.2);
-    }
-    
-    .file-type-label {
-      font-size: 0.75rem;
-      color: #A8A8A8;
-      text-transform: uppercase;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-    
-    .file-type-count {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #FFFFFF;
-      font-family: 'Courier New', monospace;
-      margin-top: 4px;
-    }
-    
-    /* Viral link - Keep orange for CTA */
-    .viral-link {
-      color: #D96704;
-      text-decoration: none;
-      font-size: 0.875rem;
-      text-align: center;
-      display: block;
-      margin-top: 16px;
-      transition: opacity 0.2s;
-    }
-    
-    .viral-link:hover {
-      opacity: 0.8;
-      text-decoration: underline;
-    }
-    
-    /* Success badge - Small orange accent */
-    .success-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(217, 103, 4, 0.1);
-      border: 1px solid #D96704;
-      border-radius: 6px;
-      padding: 6px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #D96704;
-      margin-top: 16px;
-    }
-  </style>
-</head>
-<body>
-  
-  <!-- TF Branding Header - Complete Block from docs/assets/TF_utility_block-2.svg -->
-  <div style="background-color: #1e1e1e; border-bottom: 1px solid #3a3a3a; padding: 12px 0;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="64" viewBox="0 0 300 64" preserveAspectRatio="xMinYMid meet">
-      <rect width="300" height="64" fill="#1e1e1e"/>
-      <svg x="12" y="10" width="44" height="44" viewBox="128 128 240 224">
-        <path d="M128 128 H368 L336 176 H256 V216 H312 L288 256 H256 V312 L208 352 V176 H128 V128 Z" fill="#F47C26"/>
-      </svg>
-      <g transform="translate(68, 0)">
-        <text x="0" y="30" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="20" fill="#FFFFFF" letter-spacing="0.01em">TANGENT FORGE</text>
-        <text x="1" y="46" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="500" font-size="11" fill="#AAAAAA" letter-spacing="0.2em">UTILITIES</text>
-      </g>
-    </svg>
-  </div>
-  
-  <!-- Navigation Tabs -->
-  <div class="flex border-b border-gray-700" style="background-color: #1F1F23;">
-    <div id="tab-cleanup" class="tab flex-1 text-center py-3 cursor-pointer tab-active" onclick="switchTab('cleanup')">
-      <i data-lucide="trash-2" class="tab-icon"></i>
-      <div class="text-xs font-semibold">CLEANUP</div>
-    </div>
-    <div id="tab-brand" class="tab flex-1 text-center py-3 tab-inactive">
-      <i data-lucide="palette" class="tab-icon"></i>
-      <div class="text-xs font-semibold">BRAND</div>
-    </div>
-    <div id="tab-ops" class="tab flex-1 text-center py-3 tab-inactive">
-      <i data-lucide="workflow" class="tab-icon"></i>
-      <div class="text-xs font-semibold">WORKFLOW</div>
-    </div>
-  </div>
-  
-  <!-- Main Content Area -->
-  <div style="padding: 24px;">
-    
-    <!-- Cleanup Tab Content -->
-    <div id="content-cleanup">
-      
-      <!-- Shared Drive Cleaner Card -->
-      <div class="card">
-        <h2 class="card-title" style="display: flex; align-items: center; gap: 8px;">
-          <i data-lucide="folder-open" style="width: 20px; height: 20px; color: #A67C52;"></i>
-          <span>Shared Drive Cleaner</span>
-        </h2>
-        
-        <!-- Hero Metric Display -->
-        <div id="results-area" class="hidden">
-          <div class="metric-display" id="gb-metric">0 GB</div>
-          <div class="text-center text-sm secondary-text mb-4">Junk Found in Shared Files</div>
-          
-          <!-- Detailed Stats -->
-          <div class="mb-4">
-            <div class="text-sm secondary-text mb-2">
-              <span class="font-semibold text-white" id="file-count">0</span> files scanned
-            </div>
-            
-            <!-- File Types Breakdown -->
-            <div class="file-type-grid" id="file-types-grid">
-              <!-- Populated dynamically -->
-            </div>
-          </div>
-          
-          <!-- Success Badge -->
-          <div class="success-badge">
-            ✓ Scan complete
-          </div>
-        </div>
-        
-        <!-- Loading Spinner -->
-        <div id="loading-area" class="hidden">
-          <div class="spinner"></div>
-          <p class="text-center text-sm secondary-text">Scanning shared files...</p>
-        </div>
-        
-        <!-- Scan Button -->
-        <button id="scan-btn" class="btn-primary" onclick="startScan()" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0 auto;">
-          <i data-lucide="search" style="width: 16px; height: 16px;"></i>
-          <span>Scan Shared Junk</span>
-        </button>
-        
-        <!-- Viral Hook -->
-        <a href="#" class="viral-link" id="viral-link" style="display: none; align-items: center; justify-content: center; gap: 6px;">
-          <i data-lucide="lightbulb" style="width: 14px; height: 14px;"></i>
-          <span>Found junk? Share this tool with a Project Manager.</span>
-        </a>
-      </div>
-      
-    </div>
-    
-    <!-- Brand Tab Content (Disabled) -->
-    <div id="content-brand" class="hidden">
-      <div class="card">
-        <h2 class="card-title secondary-text">🎨 Brand Tools</h2>
-        <p class="secondary-text">Coming soon...</p>
-      </div>
-    </div>
-    
-    <!-- Workflow Tab Content (Disabled) -->
-    <div id="content-ops" class="hidden">
-      <div class="card">
-        <h2 class="card-title secondary-text">⚙️ Workflow Automation</h2>
-        <p class="secondary-text">Coming soon...</p>
-      </div>
-    </div>
-    
-  </div>
-  
-  <script>
-    // Tab switching (only Cleanup is active)
-    function switchTab(tab) {
-      if (tab !== 'cleanup') return; // Other tabs disabled
-      
-      // Update tab styling
-      document.querySelectorAll('[id^="tab-"]').forEach(el => {
-        el.classList.remove('tab-active');
-      });
-      document.getElementById('tab-' + tab).classList.add('tab-active');
-      
-      // Update content visibility
-      document.querySelectorAll('[id^="content-"]').forEach(el => {
-        el.classList.add('hidden');
-      });
-      document.getElementById('content-' + tab).classList.remove('hidden');
-    }
-    
-    // Start the scan
-    function startScan() {
-      // Disable button
-      var btn = document.getElementById('scan-btn');
-      btn.disabled = true;
-      btn.textContent = 'Scanning...';
-      
-      // Hide results, show loading
-      document.getElementById('results-area').classList.add('hidden');
-      document.getElementById('loading-area').classList.remove('hidden');
-      document.getElementById('viral-link').style.display = 'none';
-      
-      // Call the backend
-      google.script.run
-        .withSuccessHandler(updateUI)
-        .withFailureHandler(handleError)
-        .route('scanShared', null);
-    }
-    
-    // Update UI with results
-    function updateUI(response) {
-      var btn = document.getElementById('scan-btn');
-      btn.disabled = false;
-      btn.innerHTML = '<i data-lucide="search" style="width: 16px; height: 16px;"></i><span>Scan Shared Junk</span>';
-      lucide.createIcons(); // Re-render icons
-      
-      // Hide loading
-      document.getElementById('loading-area').classList.add('hidden');
-      
-      if (response.success) {
-        var data = response.data;
-        
-        // Update hero metric (convert MB to GB)
-        var gbValue = (data.totalSizeMB / 1024).toFixed(2);
-        document.getElementById('gb-metric').textContent = gbValue + ' GB';
-        
-        // Update file count
-        document.getElementById('file-count').textContent = data.totalCount.toLocaleString();
-        
-        // Update file types grid
-        var grid = document.getElementById('file-types-grid');
-        grid.innerHTML = '';
-        
-        for (var type in data.fileTypes) {
-          if (data.fileTypes[type] > 0) {
-            var item = document.createElement('div');
-            item.className = 'file-type-item';
-            item.innerHTML = 
-              '<div class="file-type-label">' + type + '</div>' +
-              '<div class="file-type-count">' + data.fileTypes[type].toLocaleString() + '</div>';
-            grid.appendChild(item);
-          }
-        }
-        
-        // Show results
-        document.getElementById('results-area').classList.remove('hidden');
-        
-        // Show viral link if junk found
-        if (data.totalSizeMB > 0) {
-          document.getElementById('viral-link').style.display = 'flex';
-        }
-        
-      } else {
-        alert('Error: ' + response.error);
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons - Lightweight SVG icon library -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts - Inter (Tangent Forge mid-tier fallback) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
       }
-    }
-    
-    // Handle errors
-    function handleError(error) {
-      var btn = document.getElementById('scan-btn');
-      btn.disabled = false;
-      btn.innerHTML = '<i data-lucide="search" style="width: 16px; height: 16px;"></i><span>Scan Shared Junk</span>';
-      lucide.createIcons(); // Re-render icons
-      
-      document.getElementById('loading-area').classList.add('hidden');
-      
-      alert('An error occurred: ' + error.message);
-    }
-  </script>
-  
-  <!-- Initialize Lucide Icons -->
-  <script>
-    // Initialize all Lucide icons after DOM loads
-    document.addEventListener('DOMContentLoaded', function() {
-      lucide.createIcons();
-    });
-  </script>
-  
-</body>
+
+      body {
+        background-color: #2b2d31; /* Forge Charcoal */
+        color: #ffffff;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Tab Navigation */
+      .tab {
+        transition: all 0.2s ease;
+      }
+
+      .tab:not(.tab-inactive):hover {
+        background-color: rgba(166, 124, 82, 0.05); /* Subtle copper tint */
+        transform: translateY(-1px);
+      }
+
+      .tab-active {
+        border-bottom: 3px solid #a67c52; /* Copper Sheen - warm but subtle */
+        color: #a67c52; /* Copper Sheen */
+      }
+
+      .tab-inactive {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Tab icons */
+      .tab-icon {
+        width: 20px;
+        height: 20px;
+        margin: 0 auto 4px;
+        stroke-width: 2;
+      }
+
+      /* Hero Metric - Orange is OK here for data display */
+      .metric-display {
+        font-family: "Courier New", monospace;
+        font-size: 3rem;
+        font-weight: 700;
+        color: #d96704; /* Forge Orange - appropriate for metrics */
+        text-align: center;
+        margin: 24px 0;
+      }
+
+      /* Loading Spinner - Copper accent */
+      .spinner {
+        border: 3px solid #3a3a3a;
+        border-top: 3px solid #a67c52; /* Copper Sheen - lighter */
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 32px auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Cards */
+      .card {
+        background-color: #1f1f23; /* Deep Charcoal */
+        border: 1px solid #3a3a3a;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 16px;
+      }
+
+      .card-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 16px;
+      }
+
+      /* Primary Action Button - Orange spark with refined styling */
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          #b85503 0%,
+          #d96704 100%
+        ); /* Darker to Forge Orange */
+        color: #ffffff;
+        font-weight: 600;
+        padding: 14px 28px; /* Refined padding */
+        border-radius: 8px;
+        border: 1px solid rgba(217, 103, 4, 0.3); /* Subtle orange rim */
+        cursor: pointer;
+        width: auto;
+        max-width: 220px; /* Refined width */
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(217, 103, 4, 0.25);
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        background: linear-gradient(
+          135deg,
+          #d96704 0%,
+          #ff8c1a 100%
+        ); /* Brighter on hover */
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(217, 103, 4, 0.4);
+        border-color: rgba(217, 103, 4, 0.5);
+      }
+
+      .btn-primary:disabled {
+        background: #6b6b6b;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      /* Secondary text */
+      .secondary-text {
+        color: #a8a8a8; /* Smoked Gray */
+      }
+
+      /* File type grid */
+      .file-type-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .file-type-item {
+        background-color: #2b2d31;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #3a3a3a;
+        transition: all 0.2s ease;
+      }
+
+      .file-type-item:hover {
+        border-color: #a67c52; /* Copper Sheen hover */
+        box-shadow: 0 2px 8px rgba(139, 90, 60, 0.2);
+      }
+
+      .file-type-label {
+        font-size: 0.75rem;
+        color: #a8a8a8;
+        text-transform: uppercase;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+
+      .file-type-count {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #ffffff;
+        font-family: "Courier New", monospace;
+        margin-top: 4px;
+      }
+
+      /* Viral link - Keep orange for CTA */
+      .viral-link {
+        color: #d96704;
+        text-decoration: none;
+        font-size: 0.875rem;
+        text-align: center;
+        display: block;
+        margin-top: 16px;
+        transition: opacity 0.2s;
+      }
+
+      .viral-link:hover {
+        opacity: 0.8;
+        text-decoration: underline;
+      }
+
+      /* Success badge - Small orange accent */
+      .success-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(217, 103, 4, 0.1);
+        border: 1px solid #d96704;
+        border-radius: 6px;
+        padding: 6px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #d96704;
+        margin-top: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- TF Branding Header - Complete Block from docs/assets/TF_utility_block-2.svg -->
+    <div
+      style="
+        background-color: #1e1e1e;
+        border-bottom: 1px solid #3a3a3a;
+        padding: 12px 0;
+      "
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height="64"
+        viewBox="0 0 300 64"
+        preserveAspectRatio="xMinYMid meet"
+      >
+        <rect width="300" height="64" fill="#1e1e1e" />
+        <svg x="12" y="10" width="44" height="44" viewBox="128 128 240 224">
+          <path
+            d="M128 128 H368 L336 176 H256 V216 H312 L288 256 H256 V312 L208 352 V176 H128 V128 Z"
+            fill="#F47C26"
+          />
+        </svg>
+        <g transform="translate(68, 0)">
+          <text
+            x="0"
+            y="30"
+            font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            font-weight="700"
+            font-size="20"
+            fill="#FFFFFF"
+            letter-spacing="0.01em"
+          >
+            TANGENT FORGE
+          </text>
+          <text
+            x="1"
+            y="46"
+            font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            font-weight="500"
+            font-size="11"
+            fill="#AAAAAA"
+            letter-spacing="0.2em"
+          >
+            UTILITIES
+          </text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div
+      class="flex border-b border-gray-700"
+      style="background-color: #1f1f23"
+    >
+      <div
+        id="tab-cleanup"
+        class="tab flex-1 text-center py-3 cursor-pointer tab-active"
+        onclick="switchTab('cleanup')"
+      >
+        <i data-lucide="trash-2" class="tab-icon"></i>
+        <div class="text-xs font-semibold">CLEANUP</div>
+      </div>
+      <div id="tab-brand" class="tab flex-1 text-center py-3 tab-inactive">
+        <i data-lucide="palette" class="tab-icon"></i>
+        <div class="text-xs font-semibold">BRAND</div>
+      </div>
+      <div
+        id="tab-ops"
+        class="tab flex-1 text-center py-3"
+        onclick="switchTab('ops')"
+      >
+        <i data-lucide="workflow" class="tab-icon"></i>
+        <div class="text-xs font-semibold">WORKFLOW</div>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div style="padding: 24px">
+      <!-- Cleanup Tab Content -->
+      <div id="content-cleanup">
+        <!-- Shared Drive Cleaner Card -->
+        <div class="card">
+          <h2
+            class="card-title"
+            style="display: flex; align-items: center; gap: 8px"
+          >
+            <i
+              data-lucide="folder-open"
+              style="width: 20px; height: 20px; color: #a67c52"
+            ></i>
+            <span>Shared Drive Cleaner</span>
+          </h2>
+
+          <!-- Hero Metric Display -->
+          <div id="results-area" class="hidden">
+            <div class="metric-display" id="gb-metric">0 GB</div>
+            <div class="text-center text-sm secondary-text mb-4">
+              Junk Found in Shared Files
+            </div>
+
+            <!-- Detailed Stats -->
+            <div class="mb-4">
+              <div class="text-sm secondary-text mb-2">
+                <span class="font-semibold text-white" id="file-count">0</span>
+                files scanned
+              </div>
+
+              <!-- File Types Breakdown -->
+              <div class="file-type-grid" id="file-types-grid">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+
+            <!-- Success Badge -->
+            <div class="success-badge">✓ Scan complete</div>
+          </div>
+
+          <!-- Loading Spinner -->
+          <div id="loading-area" class="hidden">
+            <div class="spinner"></div>
+            <p class="text-center text-sm secondary-text">
+              Scanning shared files...
+            </p>
+          </div>
+
+          <!-- Scan Button -->
+          <button
+            id="scan-btn"
+            class="btn-primary"
+            onclick="startScan()"
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 8px;
+              margin: 0 auto;
+            "
+          >
+            <i data-lucide="search" style="width: 16px; height: 16px"></i>
+            <span>Scan Shared Junk</span>
+          </button>
+
+          <!-- Viral Hook -->
+          <a
+            href="#"
+            class="viral-link"
+            id="viral-link"
+            style="
+              display: none;
+              align-items: center;
+              justify-content: center;
+              gap: 6px;
+            "
+          >
+            <i data-lucide="lightbulb" style="width: 14px; height: 14px"></i>
+            <span>Found junk? Share this tool with a Project Manager.</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Brand Tab Content (Disabled) -->
+      <div id="content-brand" class="hidden">
+        <div class="card">
+          <h2 class="card-title secondary-text">🎨 Brand Tools</h2>
+          <p class="secondary-text">Coming soon...</p>
+        </div>
+      </div>
+
+      <!-- Workflow Tab Content (Disabled) -->
+      <!-- Workflow Tab Content (Active) -->
+      <div id="content-ops" class="hidden">
+        <!-- Project Manifest Card -->
+        <div class="card">
+          <h2
+            class="card-title"
+            style="display: flex; align-items: center; gap: 8px"
+          >
+            <i
+              data-lucide="clipboard-list"
+              style="width: 20px; height: 20px; color: #a67c52"
+            ></i>
+            <span>Project Manifest</span>
+          </h2>
+
+          <p class="secondary-text text-sm mb-4">
+            Generate a Table of Contents for your Project Files.
+          </p>
+
+          <!-- Manifest Loading Spinner -->
+          <div id="manifest-loading" class="hidden">
+            <div class="spinner"></div>
+            <p class="text-center text-sm secondary-text">
+              Generating Manifest...
+            </p>
+          </div>
+
+          <!-- Generate Button -->
+          <button
+            id="manifest-btn"
+            class="btn-primary"
+            onclick="generateManifest()"
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 8px;
+              margin: 0 auto;
+            "
+          >
+            <i data-lucide="file-plus" style="width: 16px; height: 16px"></i>
+            <span>Generate Manifest</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Tab switching (only Cleanup is active)
+      // Tab switching
+      function switchTab(tab) {
+        if (tab === "brand") return; // Brand still disabled
+
+        // Update tab styling
+        document.querySelectorAll('[id^="tab-"]').forEach((el) => {
+          el.classList.remove("tab-active");
+        });
+        document.getElementById("tab-" + tab).classList.add("tab-active");
+
+        // Update content visibility
+        document.querySelectorAll('[id^="content-"]').forEach((el) => {
+          el.classList.add("hidden");
+        });
+        document.getElementById("content-" + tab).classList.remove("hidden");
+      }
+
+      // Start the scan
+      function startScan() {
+        // Disable button
+        var btn = document.getElementById("scan-btn");
+        btn.disabled = true;
+        btn.textContent = "Scanning...";
+
+        // Hide results, show loading
+        document.getElementById("results-area").classList.add("hidden");
+        document.getElementById("loading-area").classList.remove("hidden");
+        document.getElementById("viral-link").style.display = "none";
+
+        // Call the backend
+        google.script.run
+          .withSuccessHandler(updateUI)
+          .withFailureHandler(handleError)
+          .route("scanShared", null);
+      }
+
+      // Update UI with results
+      function updateUI(response) {
+        var btn = document.getElementById("scan-btn");
+        btn.disabled = false;
+        btn.innerHTML =
+          '<i data-lucide="search" style="width: 16px; height: 16px;"></i><span>Scan Shared Junk</span>';
+        lucide.createIcons(); // Re-render icons
+
+        // Hide loading
+        document.getElementById("loading-area").classList.add("hidden");
+
+        if (response.success) {
+          var data = response.data;
+
+          // Update hero metric (convert MB to GB)
+          var gbValue = (data.totalSizeMB / 1024).toFixed(2);
+          document.getElementById("gb-metric").textContent = gbValue + " GB";
+
+          // Update file count
+          document.getElementById("file-count").textContent =
+            data.totalCount.toLocaleString();
+
+          // Update file types grid
+          var grid = document.getElementById("file-types-grid");
+          grid.innerHTML = "";
+
+          for (var type in data.fileTypes) {
+            if (data.fileTypes[type] > 0) {
+              var item = document.createElement("div");
+              item.className = "file-type-item";
+              item.innerHTML =
+                '<div class="file-type-label">' +
+                type +
+                "</div>" +
+                '<div class="file-type-count">' +
+                data.fileTypes[type].toLocaleString() +
+                "</div>";
+              grid.appendChild(item);
+            }
+          }
+
+          // Show results
+          document.getElementById("results-area").classList.remove("hidden");
+
+          // Show viral link if junk found
+          if (data.totalSizeMB > 0) {
+            document.getElementById("viral-link").style.display = "flex";
+          }
+        } else {
+          alert("Error: " + response.error);
+        }
+      }
+
+      // Handle errors
+      function handleError(error) {
+        var btn = document.getElementById("scan-btn");
+        btn.disabled = false;
+        btn.innerHTML =
+          '<i data-lucide="search" style="width: 16px; height: 16px;"></i><span>Scan Shared Junk</span>';
+        lucide.createIcons(); // Re-render icons
+
+        document.getElementById("loading-area").classList.add("hidden");
+
+        alert("An error occurred: " + error.message);
+      }
+
+      // --- MANIFEST MODULE ---
+
+      function generateManifest() {
+        var btn = document.getElementById("manifest-btn");
+        btn.disabled = true;
+        btn.textContent = "Working...";
+
+        document.getElementById("manifest-loading").classList.remove("hidden");
+
+        google.script.run
+          .withSuccessHandler(function (response) {
+            var btn = document.getElementById("manifest-btn");
+            btn.disabled = false;
+            btn.innerHTML =
+              '<i data-lucide="file-plus" style="width: 16px; height: 16px;"></i><span>Generate Manifest</span>';
+            lucide.createIcons();
+
+            document.getElementById("manifest-loading").classList.add("hidden");
+
+            if (response.success) {
+              alert(response.message);
+            } else {
+              alert("Error: " + response.error);
+            }
+          })
+          .withFailureHandler(function (error) {
+            var btn = document.getElementById("manifest-btn");
+            btn.disabled = false;
+            btn.innerHTML =
+              '<i data-lucide="file-plus" style="width: 16px; height: 16px;"></i><span>Generate Manifest</span>';
+            lucide.createIcons();
+
+            document.getElementById("manifest-loading").classList.add("hidden");
+
+            alert("System Error: " + error.message);
+          })
+          .route("generateManifest", null);
+      }
+    </script>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+      // Initialize all Lucide icons after DOM loads
+      document.addEventListener("DOMContentLoaded", function () {
+        lucide.createIcons();
+      });
+    </script>
+  </body>
 </html>
