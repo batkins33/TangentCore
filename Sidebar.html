@@ -27,7 +27,7 @@
     
     /* Tab Navigation */
     .tab-active {
-      border-bottom: 3px solid #8B5A3C; /* Dark Copper - industrial accent */
+      border-bottom: 3px solid #A67C52; /* Copper Sheen - warm but subtle */
       color: #A67C52; /* Copper Sheen */
     }
     
@@ -46,10 +46,10 @@
       margin: 24px 0;
     }
     
-    /* Loading Spinner - Copper for industrial feel */
+    /* Loading Spinner - Copper accent */
     .spinner {
       border: 3px solid #3a3a3a;
-      border-top: 3px solid #8B5A3C; /* Dark Copper */
+      border-top: 3px solid #A67C52; /* Copper Sheen - lighter */
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -78,31 +78,27 @@
       margin-bottom: 16px;
     }
     
-    /* Primary Action Button - Forged copper with metallic sheen */
+    /* Primary Action Button - Orange spark with refined styling */
     .btn-primary {
-      background: linear-gradient(135deg, #6B4423 0%, #8B5A3C 100%); /* Forged Bronze → Dark Copper */
+      background: linear-gradient(135deg, #D96704 0%, #E87805 100%); /* Forge Orange gradient */
       color: #FFFFFF;
       font-weight: 600;
       padding: 14px 28px; /* Refined padding */
       border-radius: 8px;
-      border: 1px solid rgba(166, 124, 82, 0.3); /* Subtle copper rim */
+      border: 1px solid rgba(217, 103, 4, 0.3); /* Subtle orange rim */
       cursor: pointer;
       width: auto;
-      max-width: 220px; /* Slightly wider for refinement */
+      max-width: 220px; /* Refined width */
       font-size: 0.95rem;
       transition: all 0.3s ease;
-      box-shadow:
-        0 2px 8px rgba(107, 68, 35, 0.3),
-        inset 0 0 20px rgba(166, 124, 82, 0.15); /* Metallic inner glow */
+      box-shadow: 0 2px 8px rgba(217, 103, 4, 0.25);
     }
 
     .btn-primary:hover:not(:disabled) {
-      background: linear-gradient(135deg, #8B5A3C 0%, #A67C52 100%); /* Copper Sheen on hover */
+      background: linear-gradient(135deg, #E87805 0%, #FF8C1A 100%); /* Brighter on hover */
       transform: translateY(-2px);
-      box-shadow:
-        0 4px 16px rgba(139, 90, 60, 0.4),
-        inset 0 0 20px rgba(166, 124, 82, 0.25); /* Enhanced metallic glow */
-      border-color: rgba(166, 124, 82, 0.5);
+      box-shadow: 0 4px 16px rgba(217, 103, 4, 0.4);
+      border-color: rgba(217, 103, 4, 0.5);
     }
     
     .btn-primary:disabled {
