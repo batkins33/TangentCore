@@ -3,7 +3,7 @@
  * Scans and analyzes "Shared with Me" files
  */
 
-var CleanerModule = (function () {
+var CleanupModule = (function () {
   /**
    * Scans shared files and returns analytics
    * ALPHA VERSION: Hard capped at 500 files for speed
