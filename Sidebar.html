@@ -220,7 +220,7 @@
   
   <!-- Navigation Tabs -->
   <div class="flex border-b border-gray-700" style="background-color: #1F1F23;">
-    <div id="tab-janitor" class="tab flex-1 text-center py-3 cursor-pointer tab-active" onclick="switchTab('janitor')">
+    <div id="tab-cleanup" class="tab flex-1 text-center py-3 cursor-pointer tab-active" onclick="switchTab('cleanup')">
       <i data-lucide="trash-2" class="tab-icon"></i>
       <div class="text-xs font-semibold">CLEANUP</div>
     </div>
@@ -237,8 +237,8 @@
   <!-- Main Content Area -->
   <div style="padding: 24px;">
     
-    <!-- Janitor Tab Content -->
-    <div id="content-janitor">
+    <!-- Cleanup Tab Content -->
+    <div id="content-cleanup">
       
       <!-- Shared Drive Cleaner Card -->
       <div class="card">
@@ -310,9 +310,9 @@
   </div>
   
   <script>
-    // Tab switching (only Janitor is active)
+    // Tab switching (only Cleanup is active)
     function switchTab(tab) {
-      if (tab !== 'janitor') return; // Other tabs disabled
+      if (tab !== 'cleanup') return; // Other tabs disabled
       
       // Update tab styling
       document.querySelectorAll('[id^="tab-"]').forEach(el => {
@@ -386,7 +386,7 @@
         
         // Show viral link if junk found
         if (data.totalSizeMB > 0) {
-          document.getElementById('viral-link').style.display = 'block';
+          document.getElementById('viral-link').style.display = 'flex';
         }
         
       } else {

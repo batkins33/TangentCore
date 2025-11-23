@@ -1,38 +1,58 @@
 /**
  * Tangent Forge Utilities - Main Entry Point
  * A professional Google Workspace Add-on with modular architecture
+ * Supports: Sheets, Docs, and Slides
  */
 
 /**
- * Creates the add-on menu when the document is opened
+ * Creates the add-on menu when the file is opened
+ * dynamically detecting the host application.
  * @param {Object} e - The event object
  */
 function onOpen(e) {
-  var ui = SpreadsheetApp.getUi();
-  ui.createMenu('Tangent Forge')
-    .addItem('Open Utilities', 'showSidebar')
-    .addToUi();
+  var ui = getTangentUi_();
+  if (ui) {
+    ui.createMenu("Tangent Forge")
+      .addItem("Open Utilities", "showSidebar")
+      .addToUi();
+  }
 }
 
 /**
- * Opens the sidebar when the add-on homepage is triggered
- * @param {Object} e - The event object
- * @returns {Card} The homepage card
- */
-function onHomepage(e) {
-  showSidebar();
-  return null;
-}
-
-/**
- * Displays the main sidebar interface
+ * Opens the sidebar.
+ * Automatically detects if running in Sheets, Docs, or Slides.
  */
 function showSidebar() {
-  var html = HtmlService.createHtmlOutputFromFile('Sidebar')
-    .setTitle('Tangent Forge Utilities')
+  var html = HtmlService.createHtmlOutputFromFile("Sidebar")
+    .setTitle("Tangent Forge Utilities")
     .setWidth(350);
-  
-  SpreadsheetApp.getUi().showSidebar(html);
+
+  var ui = getTangentUi_();
+  if (ui) {
+    ui.showSidebar(html);
+  } else {
+    Logger.log("Could not find active UI host.");
+  }
+}
+
+/**
+ * Helper: Detects the active application context
+ * allowing the Monolith to run anywhere.
+ */
+function getTangentUi_() {
+  try {
+    return SpreadsheetApp.getUi();
+  } catch (e) {}
+  try {
+    return DocumentApp.getUi();
+  } catch (e) {}
+  try {
+    return SlidesApp.getUi();
+  } catch (e) {}
+  try {
+    return FormApp.getUi();
+  } catch (e) {}
+  return null;
 }
 
 /**
@@ -44,43 +64,47 @@ function showSidebar() {
 function route(action, payload) {
   try {
     var user = Session.getActiveUser().getEmail();
-    
-    // Log the activity
-    TangentCore.logActivity(user, 'router', action);
-    
-    // Check license
+
+    // 1. Log the activity via Core
+    TangentCore.logActivity(user, "router", action);
+
+    // 2. Check license (Enforces Feature Flags)
     var license = TangentCore.checkLicense(user);
-    
-    // Route to appropriate handler
-    switch(action) {
-      case 'scanShared':
-        // Verify user has access to cleaner module
-        if (!license.modules.includes('cleaner')) {
-          return {
-            success: false,
-            error: 'Cleaner module not available in your tier'
-          };
+
+    // 3. Route to appropriate handler
+    switch (action) {
+      // --- MODULE: JANITOR ---
+      case "scanShared":
+        if (!license.modules.includes("cleaner")) {
+          return { success: false, error: "Module not in license." };
         }
-        return CleanerModule.scanSharedFiles();
-        
-      case 'getLicense':
-        return {
-          success: true,
-          data: license
-        };
-        
+        return CleanupModule.scanSharedFiles();
+
+      // --- MODULE: SYSTEM ---
+      case "getLicense":
+        return { success: true, data: license };
+
       default:
-        return {
-          success: false,
-          error: 'Unknown action: ' + action
-        };
+        TangentCore.logActivity(
+          user,
+          "router_error",
+          "Unknown action: " + action
+        );
+        return { success: false, error: "Unknown action: " + action };
     }
-    
   } catch (error) {
-    Logger.log('Router error: ' + error.toString());
+    console.error("Router Crash:", error);
     return {
       success: false,
-      error: error.toString()
+      error: "System Error: " + error.toString(),
     };
   }
+}
+
+/**
+ * Required for Workspace Add-on Manifests
+ * Returns card objects (Stub for future Phase 3)
+ */
+function onHomepage(e) {
+  return null;
 }
