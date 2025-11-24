@@ -5,13 +5,6 @@
       {
         "userSymbol": "Drive",
         "version": "v3",
-{
-  "timeZone": "America/Chicago",
-  "dependencies": {
-    "enabledAdvancedServices": [
-      {
-        "userSymbol": "Drive",
-        "version": "v3",
         "serviceId": "drive"
       }
     ]
