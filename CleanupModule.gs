@@ -31,6 +31,8 @@ var CleanupModule = (function () {
 
       // Get file limit from ConfigModule (allows dynamic configuration)
       var MAX_FILES = ConfigModule.get("MAX_FILES");
+      var MAX_FILE_LIST = 100; // Limit file list payload to prevent client timeout
+      var fileList = []; // Store file metadata for UI
       var continuationToken = null;
       var hasMore = true;
 
@@ -64,6 +66,18 @@ var CleanupModule = (function () {
           var category = TangentCore.categorizeFileType(file.mimeType);
           fileTypes[category]++;
 
+          // Collect file metadata for UI (limit to first 100)
+          if (fileList.length < MAX_FILE_LIST) {
+            fileList.push({
+              id: file.id,
+              name: file.name,
+              mimeType: file.mimeType,
+              size: file.size || 0,
+              modifiedTime: file.modifiedTime,
+              owners: file.owners || [],
+            });
+          }
+
           // Stop if we hit the cap
           if (totalCount >= MAX_FILES) {
             break;
@@ -89,6 +103,7 @@ var CleanupModule = (function () {
       return {
         success: true,
         data: {
+          fileList: fileList, // File metadata for UI
           totalCount: totalCount,
           totalSizeMB: totalSizeMB,
           fileTypes: fileTypes,
