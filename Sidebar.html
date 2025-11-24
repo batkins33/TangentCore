@@ -834,7 +834,20 @@
             document.getElementById("manifest-loading").classList.add("hidden");
 
             if (response.success) {
-              alert(response.message);
+              // Handle different response types
+              if (response.type === 'NEW_FILE') {
+                // Created new spreadsheet
+                var message = response.message + '\\n\\nClick OK to open the report in a new tab.';
+                if (confirm(message)) {
+                  window.open(response.url, '_blank');
+                }
+              } else if (response.type === 'UPDATE') {
+                // Updated existing sheet
+                alert('✓ Manifest Updated\\n\\n' + response.message);
+              } else {
+                // Fallback for older response format
+                alert(response.message);
+              }
             } else {
               alert("Error: " + response.error);
             }

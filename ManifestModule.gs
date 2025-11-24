@@ -1,6 +1,6 @@
 /**
  * Project Manifest Generator Module
- * Scans files and creates a Table of Contents in Sheets
+ * Context-Aware: Works in both Sheets and Docs
  */
 var ManifestModule = (function () {
   /**
@@ -50,26 +50,17 @@ var ManifestModule = (function () {
         }
       }
 
-      // Validate we're in a Sheet (requirement for Manifest)
-      if (appType !== "SHEET") {
+      // Validate we're in a Sheet or Doc
+      if (appType !== "SHEET" && appType !== "DOC") {
         return {
           success: false,
           error:
-            "The Manifest tool currently only supports Google Sheets. You are in: " +
+            "The Manifest tool requires Google Sheets or Docs. You are in: " +
             (appType || "Unknown app"),
         };
       }
 
-      // 2. Create new sheet
-      var timeStamp = Utilities.formatDate(
-        new Date(),
-        Session.getScriptTimeZone(),
-        "yyyy-MM-dd_HHmm"
-      );
-      var sheetName = "Manifest_" + timeStamp;
-      var sheet = app.insertSheet(sheetName);
-
-      // 3. Scan Root Drive (Limit 20 for Alpha)
+      // Scan Root Drive (Limit 20 for Alpha)
       var files = DriveApp.getRootFolder().getFiles();
       var fileData = [];
       var limit = 20;
@@ -87,23 +78,57 @@ var ManifestModule = (function () {
         count++;
       }
 
-      // 4. Write Header
       var headers = [
         ["File Name", "Type", "Size (MB)", "Last Updated", "Link"],
       ];
+
+      var sheet;
+      var responseType;
+      var responseUrl;
+
+      // SCENARIO A: Running in a Doc - Create New Spreadsheet
+      if (appType === "DOC") {
+        var newSheetName = "Project Manifest - " + new Date().toLocaleDateString();
+        var newSpreadsheet = SpreadsheetApp.create(newSheetName);
+        sheet = newSpreadsheet.getActiveSheet();
+        sheet.setName("Manifest Report");
+        
+        responseType = "NEW_FILE";
+        responseUrl = newSpreadsheet.getUrl();
+      }
+      // SCENARIO B: Running in a Sheet - Update Existing
+      else if (appType === "SHEET") {
+        var sheetName = "Manifest Report";
+        sheet = app.getSheetByName(sheetName);
+        
+        if (sheet) {
+          // Sheet exists - clear it
+          sheet.clear();
+        } else {
+          // Sheet doesn't exist - create it
+          sheet = app.insertSheet(sheetName);
+        }
+        
+        // Activate the sheet
+        app.setActiveSheet(sheet);
+        
+        responseType = "UPDATE";
+      }
+
+      // Write Headers
       sheet.getRange(1, 1, 1, 5).setValues(headers);
 
-      // 5. Write Data
+      // Write Data
       if (fileData.length > 0) {
         sheet.getRange(2, 1, fileData.length, 5).setValues(fileData);
       }
 
-      // 6. Formatting
+      // Formatting
       var headerRange = sheet.getRange(1, 1, 1, 5);
       headerRange
         .setBackground("#F47C26") // Forge Orange
         .setFontColor("#FFFFFF")
-        .setFontWeight("bold");
+        .setFontWeight(\"bold\");
 
       sheet.setFrozenRows(1);
       sheet.autoResizeColumns(1, 5);
@@ -111,6 +136,8 @@ var ManifestModule = (function () {
       return {
         success: true,
         message: "Manifest created with " + count + " files.",
+        type: responseType,
+        url: responseUrl,
       };
     } catch (error) {
       console.error("Manifest Error:", error);
