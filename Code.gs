@@ -55,6 +55,63 @@ function getTangentUi_() {
   return null;
 }
 
+// ========== PUBLIC API FUNCTIONS (For Client-Side Calls) ==========
+
+/**
+ * Public API: Scan shared files
+ * Called from Sidebar.html via google.script.run
+ * @returns {Object} Scan results with file data
+ */
+function apiScanSharedFiles() {
+  try {
+    var user = Session.getActiveUser().getEmail();
+    TangentCore.logActivity(user, "api", "apiScanSharedFiles");
+
+    var result = CleanupModule.scanSharedFiles();
+
+    // Return the data directly for client consumption
+    if (result.success) {
+      return result.data;
+    } else {
+      throw new Error(result.error);
+    }
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
+
+/**
+ * Public API: Dismiss files from "Shared With Me"
+ * Called from Sidebar.html via google.script.run
+ * @param {Array<string>} fileIds - Array of file IDs to dismiss
+ * @returns {Object} Batch dismissal results
+ */
+function apiDismissFiles(fileIds) {
+  try {
+    var user = Session.getActiveUser().getEmail();
+    TangentCore.logActivity(
+      user,
+      "api",
+      "apiDismissFiles: " + fileIds.length + " files"
+    );
+
+    var result = DismissModule.dismissBatch(fileIds);
+
+    // Return the data for client consumption
+    if (result.success) {
+      return result.data;
+    } else {
+      throw new Error(result.error);
+    }
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
+
+// ========== ROUTER (For Legacy Compatibility) ==========
+
 /**
  * Central router function to handle UI actions
  * @param {string} action - The action to perform

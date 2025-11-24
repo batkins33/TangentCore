@@ -216,6 +216,106 @@
         color: #d96704;
         margin-top: 16px;
       }
+
+      /* File List Table */
+      .file-list {
+        max-height: 400px;
+        overflow-y: auto;
+        margin: 16px 0;
+        border: 1px solid #3a3a3a;
+        border-radius: 8px;
+      }
+
+      .file-row {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        border-bottom: 1px solid #2b2d31;
+        transition: background-color 0.2s ease;
+      }
+
+      .file-row:hover {
+        background-color: rgba(166, 124, 82, 0.05);
+      }
+
+      .file-row:last-child {
+        border-bottom: none;
+      }
+
+      .file-checkbox {
+        margin-right: 12px;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+
+      .file-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 12px;
+        color: #a67c52;
+      }
+
+      .file-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .file-name {
+        font-size: 14px;
+        font-weight: 500;
+        color: #ffffff;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .file-meta {
+        font-size: 12px;
+        color: #a8a8a8;
+        margin-top: 2px;
+      }
+
+      /* Secondary Button */
+      .btn-secondary {
+        background: #3a3a3a;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: 1px solid #4a4a4a;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: #4a4a4a;
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Action Bar */
+      .action-bar {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 16px;
+        padding: 12px;
+        background: rgba(26, 26, 26, 0.5);
+        border-radius: 8px;
+      }
+
+      .selection-count {
+        font-size: 13px;
+        color: #a8a8a8;
+      }
     </style>
   </head>
   <body>
@@ -299,42 +399,22 @@
     <div style="padding: 24px">
       <!-- Cleanup Tab Content -->
       <div id="content-cleanup">
-        <!-- Shared Drive Cleaner Card -->
+        <!-- TF Site Survey Card -->
         <div class="card">
           <h2
             class="card-title"
             style="display: flex; align-items: center; gap: 8px"
           >
             <i
-              data-lucide="folder-open"
-              style="width: 20px; height: 20px; color: #a67c52"
+              data-lucide="scan" 
+              style="width: 20px; height: 20px; color: #F47C26"
             ></i>
-            <span>Shared Drive Cleaner</span>
+            <span>TF Site Survey</span>
           </h2>
 
-          <!-- Hero Metric Display -->
-          <div id="results-area" class="hidden">
-            <div class="metric-display" id="gb-metric">0 GB</div>
-            <div class="text-center text-sm secondary-text mb-4">
-              Junk Found in Shared Files
-            </div>
-
-            <!-- Detailed Stats -->
-            <div class="mb-4">
-              <div class="text-sm secondary-text mb-2">
-                <span class="font-semibold text-white" id="file-count">0</span>
-                files scanned
-              </div>
-
-              <!-- File Types Breakdown -->
-              <div class="file-type-grid" id="file-types-grid">
-                <!-- Populated dynamically -->
-              </div>
-            </div>
-
-            <!-- Success Badge -->
-            <div class="success-badge">✓ Scan complete</div>
-          </div>
+          <p class="secondary-text text-sm mb-4">
+            Scan your "Shared With Me" files and safely dismiss clutter.
+          </p>
 
           <!-- Loading Spinner -->
           <div id="loading-area" class="hidden">
@@ -358,24 +438,46 @@
             "
           >
             <i data-lucide="search" style="width: 16px; height: 16px"></i>
-            <span>Scan Shared Junk</span>
+            <span>Start Site Survey</span>
           </button>
 
-          <!-- Viral Hook -->
-          <a
-            href="#"
-            class="viral-link"
-            id="viral-link"
-            style="
-              display: none;
-              align-items: center;
-              justify-content: center;
-              gap: 6px;
-            "
-          >
-            <i data-lucide="lightbulb" style="width: 14px; height: 14px"></i>
-            <span>Found junk? Share this tool with a Project Manager.</span>
-          </a>
+          <!-- Results Area -->
+          <div id="results-area" class="hidden">
+            <!-- Summary Stats -->
+            <div style="margin: 20px 0; padding: 16px; background: rgba(26, 26, 26, 0.5); border-radius: 8px;">
+              <div class="text-sm secondary-text mb-1">
+                <span class="font-semibold text-white" id="file-count">0</span> files found
+              </div>
+              <div class="text-sm secondary-text">
+                Total size: <span class="font-semibold text-white" id="total-size">0 MB</span>
+              </div>
+            </div>
+
+            <!-- File List -->
+            <div id="file-list" class="file-list">
+              <!-- Populated dynamically -->
+            </div>
+
+            <!-- Action Bar -->
+            <div class="action-bar hidden" id="action-bar">
+              <div class="selection-count">
+                <span id="selected-count">0</span> files selected
+              </div>
+              <button
+                id="dismiss-btn"
+                class="btn-secondary"
+                onclick="dismissSelected()"
+                disabled
+              >
+                <span>Dismiss (Safe Hide)</span>
+              </button>
+            </div>
+
+            <!-- Success Message -->
+            <div id="dismiss-success" class="success-badge hidden" style="margin-top: 16px;">
+              ✓ Files dismissed successfully
+            </div>
+          </div>
         </div>
       </div>
 
@@ -454,76 +556,197 @@
         document.getElementById("content-" + tab).classList.remove("hidden");
       }
 
+      // ========== GLOBAL STATE ==========
+      var scannedFiles = [];  // Store file metadata
+      
+      // ========== SCAN WORKFLOW ==========
+      
       // Start the scan
       function startScan() {
         // Disable button
         var btn = document.getElementById("scan-btn");
         btn.disabled = true;
-        btn.textContent = "Scanning...";
+        btn.innerHTML = '\u003ci data-lucide="loader" style="width: 16px; height: 16px; animation: spin 1s linear infinite;"\u003e\u003c/i\u003e\u003cspan\u003eScanning...\u003c/span\u003e';
 
         // Hide results, show loading
         document.getElementById("results-area").classList.add("hidden");
         document.getElementById("loading-area").classList.remove("hidden");
-        document.getElementById("viral-link").style.display = "none";
 
-        // Call the backend
+        // Call the NEW API
         google.script.run
-          .withSuccessHandler(updateUI)
+          .withSuccessHandler(renderFileList)
           .withFailureHandler(handleError)
-          .route("scanShared", null);
+          .apiScanSharedFiles();
       }
 
-      // Update UI with results
-      function updateUI(response) {
+      // Render the file list
+      function renderFileList(data) {
+        // Store data globally
+        scannedFiles = data.files || [];
+        
+        // Re-enable button
         var btn = document.getElementById("scan-btn");
         btn.disabled = false;
         btn.innerHTML =
-          '<i data-lucide="search" style="width: 16px; height: 16px;"></i><span>Scan Shared Junk</span>';
-        lucide.createIcons(); // Re-render icons
+          '\u003ci data-lucide="search" style="width: 16px; height: 16px;"\u003e\u003c/i\u003e\u003cspan\u003eStart Site Survey\u003c/span\u003e';
+        lucide.createIcons();
 
         // Hide loading
         document.getElementById("loading-area").classList.add("hidden");
 
-        if (response.success) {
-          var data = response.data;
+        // Update summary stats
+        document.getElementById("file-count").textContent = (data.totalCount || 0).toLocaleString();
+        document.getElementById("total-size").textContent = (data.totalSizeMB || 0).toFixed(2);
 
-          // Update hero metric (convert MB to GB)
-          var gbValue = (data.totalSizeMB / 1024).toFixed(2);
-          document.getElementById("gb-metric").textContent = gbValue + " GB";
-
-          // Update file count
-          document.getElementById("file-count").textContent =
-            data.totalCount.toLocaleString();
-
-          // Update file types grid
-          var grid = document.getElementById("file-types-grid");
-          grid.innerHTML = "";
-
-          for (var type in data.fileTypes) {
-            if (data.fileTypes[type] > 0) {
-              var item = document.createElement("div");
-              item.className = "file-type-item";
-              item.innerHTML =
-                '<div class="file-type-label">' +
-                type +
-                "</div>" +
-                '<div class="file-type-count">' +
-                data.fileTypes[type].toLocaleString() +
-                "</div>";
-              grid.appendChild(item);
-            }
-          }
-
-          // Show results
-          document.getElementById("results-area").classList.remove("hidden");
-
-          // Show viral link if junk found
-          if (data.totalSizeMB > 0) {
-            document.getElementById("viral-link").style.display = "flex";
-          }
+        // Build file list HTML
+        var fileListHTML = "";
+        
+        // Note: CleanupModule returns stats, not individual files
+        // We need to update CleanupModule to return file data, or use a different approach
+        // For now, show a message
+        if (!scannedFiles.length) {
+          fileListHTML = '\u003cdiv style="padding: 20px; text-align: center; color: #a8a8a8;"\u003e' +
+            '\u003cp\u003eNo files available for selection.\u003c/p\u003e' +
+            '\u003cp class="text-xs mt-2"\u003eNote: This alpha version shows statistics only.\u003c/p\u003e' +
+            '\u003c/div\u003e';
         } else {
-          alert("Error: " + response.error);
+          scannedFiles.forEach(function(file, index) {
+            var iconName = getFileIcon(file.mimeType);
+            fileListHTML +=
+              '\u003cdiv class="file-row" data-file-id="' + file.id + '"\u003e' +
+              '  \u003cinput type="checkbox" class="file-checkbox" onchange="updateSelection()" /\u003e' +
+              '  \u003ci data-lucide="' + iconName + '" class="file-icon"\u003e\u003c/i\u003e' +
+              '  \u003cdiv class="file-info"\u003e' +
+              '    \u003cdiv class="file-name"\u003e' + escapeHtml(file.name) + '\u003c/div\u003e' +
+              '    \u003cdiv class="file-meta"\u003e' + formatFileSize(file.size) + ' • ' + (file.mimeType || 'Unknown type') + '\u003c/div\u003e' +
+              '  \u003c/div\u003e' +
+              '\u003c/div\u003e';
+          });
         }
+
+        document.getElementById("file-list").innerHTML = fileListHTML;
+        
+        // Show results area
+        document.getElementById("results-area").classList.remove("hidden");
+        
+        // Show action bar if we have files
+        if (scannedFiles.length > 0) {
+          document.getElementById("action-bar").classList.remove("hidden");
+        }
+        
+        // Re-render icons
+        lucide.createIcons();
+      }
+
+      // ========== SELECTION MANAGEMENT ==========
+      
+      function updateSelection() {
+        var checkboxes = document.querySelectorAll('.file-checkbox');
+        var selectedCount = 0;
+        
+        checkboxes.forEach(function(cb) {
+          if (cb.checked) selectedCount++;
+        });
+        
+        document.getElementById('selected-count').textContent = selectedCount;
+        document.getElementById('dismiss-btn').disabled = selectedCount === 0;
+      }
+
+      // ========== DISMISS WORKFLOW ==========
+      
+      function dismissSelected() {
+        var checkboxes = document.querySelectorAll('.file-checkbox:checked');
+        var fileIds = [];
+        
+        checkboxes.forEach(function(cb) {
+          var row = cb.closest('.file-row');
+          var fileId = row.getAttribute('data-file-id');
+          if (fileId) fileIds.push(fileId);
+        });
+        
+        if (fileIds.length === 0) {
+          alert('No files selected.');
+          return;
+        }
+        
+        // Confirm action
+        if (!confirm('Dismiss ' + fileIds.length + ' file(s)? This will remove them from your "Shared With Me" view (safe, reversible).')) {
+          return;
+        }
+        
+        // Disable button
+        var btn = document.getElementById('dismiss-btn');
+        btn.disabled = true;
+        btn.innerHTML = '\u003cspan\u003eDismissing...\u003c/span\u003e';
+        
+        // Call API
+        google.script.run
+          .withSuccessHandler(handleDismissSuccess)
+          .withFailureHandler(handleError)
+          .apiDismissFiles(fileIds);
+      }
+
+      function handleDismissSuccess(result) {
+        // Re-enable button
+        var btn = document.getElementById('dismiss-btn');
+        btn.disabled = false;
+        btn.innerHTML = '\u003cspan\u003eDismiss (Safe Hide)\u003c/span\u003e';
+        
+        // Remove dismissed files from DOM
+        var checkboxes = document.querySelectorAll('.file-checkbox:checked');
+        checkboxes.forEach(function(cb) {
+          var row = cb.closest('.file-row');
+          row.style.opacity = '0';
+          row.style.transition = 'opacity 0.3s ease';
+          setTimeout(function() {
+            row.remove();
+            updateSelection();
+          }, 300);
+        });
+        
+        // Show success message
+        var successDiv = document.getElementById('dismiss-success');
+        successDiv.classList.remove('hidden');
+        successDiv.textContent = '✓ ' + result.successCount + ' file(s) dismissed successfully';
+        
+        setTimeout(function() {
+          successDiv.classList.add('hidden');
+        }, 5000);
+      }
+
+      // ========== UTILITY FUNCTIONS ==========
+      
+      function getFileIcon(mimeType) {
+        if (!mimeType) return 'file';
+        if (mimeType.includes('pdf')) return 'file-text';
+        if (mimeType.includes('sheet')) return 'table';
+        if (mimeType.includes('document')) return 'file-text';
+        if (mimeType.includes('presentation')) return 'presentation';
+        if (mimeType.includes('image')) return 'image';
+        if (mimeType.includes('video')) return 'video';
+        if (mimeType.includes('folder')) return 'folder';
+        return 'file';
+      }
+
+      function formatFileSize(bytes) {
+        if (!bytes) return '0 B';
+        var kb = bytes / 1024;
+        if (kb < 1024) return kb.toFixed(1) + ' KB';
+        var mb = kb / 1024;
+        if (mb < 1024) return mb.toFixed(1) + ' MB';
+        var gb = mb / 1024;
+        return gb.toFixed(2) + ' GB';
+      }
+
+      function escapeHtml(text) {
+        var map = {
+          '\u0026': '\u0026amp;',
+          '\u003c': '\u0026lt;',
+          '\u003e': '\u0026gt;',
+          '"': '\u0026quot;',
+          "'": '\u0026#039;'
+        };
+        return text.replace(/[\u0026\u003c\u003e"']/g, function(m) { return map[m]; });
       }
 
       // Handle errors
@@ -531,8 +754,8 @@
         var btn = document.getElementById("scan-btn");
         btn.disabled = false;
         btn.innerHTML =
-          '<i data-lucide="search" style="width: 16px; height: 16px;"></i><span>Scan Shared Junk</span>';
-        lucide.createIcons(); // Re-render icons
+          '\u003ci data-lucide="search" style="width: 16px; height: 16px;"\u003e\u003c/i\u003e\u003cspan\u003eStart Site Survey\u003c/span\u003e';
+        lucide.createIcons();
 
         document.getElementById("loading-area").classList.add("hidden");
 
