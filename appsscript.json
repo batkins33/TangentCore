@@ -22,7 +22,7 @@
   "addOns": {
     "common": {
       "name": "Tangent Forge Utilities",
-      "logoUrl": "https://tangent-forge.github.io/utilities/assets/icon-toolbar.png",
+      "logoUrl": "https://cdn.jsdelivr.net/gh/batkins33/TangentCore/assets/icon-toolbar-v2.png",
       "useLocaleFromApp": true,
       "homepageTrigger": {
         "runFunction": "onDriveHomepage",
