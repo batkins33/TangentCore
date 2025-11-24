@@ -122,19 +122,6 @@ var ManifestModule = (function () {
       if (fileData.length > 0) {
         sheet.getRange(2, 1, fileData.length, 5).setValues(fileData);
       }
-
-      // Formatting
-      var headerRange = sheet.getRange(1, 1, 1, 5);
-      headerRange
-        .setBackground("#F47C26") // Forge Orange
-        .setFontColor("#FFFFFF")
-        .setFontWeight(\"bold\");
-
-      sheet.setFrozenRows(1);
-      sheet.autoResizeColumns(1, 5);
-
-      return {
-        success: true,
         message: "Manifest created with " + count + " files.",
         type: responseType,
         url: responseUrl,
