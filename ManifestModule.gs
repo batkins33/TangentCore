@@ -9,21 +9,54 @@ var ManifestModule = (function () {
    */
   function generateManifest() {
     try {
-      // 1. Check if active app is Spreadsheet
-      var ss;
+      // Robust app context detection
+      var app = null;
+      var appType = "";
+
+      // Try Spreadsheet first (Safe Check)
       try {
-        ss = SpreadsheetApp.getActiveSpreadsheet();
+        var ss = SpreadsheetApp.getActiveSpreadsheet();
+        if (ss) {
+          app = ss;
+          appType = "SHEET";
+        }
       } catch (e) {
-        return {
-          success: false,
-          error: "Please open a Google Sheet to use this tool.",
-        };
+        // Not a sheet - that's okay, continue checking
       }
 
-      if (!ss) {
+      // Try Doc second
+      if (!app) {
+        try {
+          var doc = DocumentApp.getActiveDocument();
+          if (doc) {
+            app = doc;
+            appType = "DOC";
+          }
+        } catch (e) {
+          // Not a doc - that's okay
+        }
+      }
+
+      // Try Slides third
+      if (!app) {
+        try {
+          var presentation = SlidesApp.getActivePresentation();
+          if (presentation) {
+            app = presentation;
+            appType = "SLIDES";
+          }
+        } catch (e) {
+          // Not slides - that's okay
+        }
+      }
+
+      // Validate we're in a Sheet (requirement for Manifest)
+      if (appType !== "SHEET") {
         return {
           success: false,
-          error: "Please open a Google Sheet to use this tool.",
+          error:
+            "The Manifest tool currently only supports Google Sheets. You are in: " +
+            (appType || "Unknown app"),
         };
       }
 
@@ -34,7 +67,7 @@ var ManifestModule = (function () {
         "yyyy-MM-dd_HHmm"
       );
       var sheetName = "Manifest_" + timeStamp;
-      var sheet = ss.insertSheet(sheetName);
+      var sheet = app.insertSheet(sheetName);
 
       // 3. Scan Root Drive (Limit 20 for Alpha)
       var files = DriveApp.getRootFolder().getFiles();

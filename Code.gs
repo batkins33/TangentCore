@@ -13,7 +13,7 @@ function onOpen(e) {
   var ui = getTangentUi_();
   if (ui) {
     ui.createMenu("Tangent Forge")
-      .addItem("Open Utilities", "showSidebar")
+      .addItem("TF Utilities", "showSidebar")
       .addToUi();
   }
 }
