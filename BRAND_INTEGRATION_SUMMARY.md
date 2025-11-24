@@ -75,7 +75,7 @@ feat: integrate TF brand assets and professional icons
 60% - Forge Charcoal (#2B2D31) + Deep Charcoal (#1F1F23)
 30% - White (#FFFFFF) + Smoked Gray (#A8A8A8)
 10% - Copper Sheen (#A67C52) - tab indicators, hover states
-5%  - Forge Orange (#D96704) - button, logo, metrics only
+5%  - Forge Orange (#d96704) - button, logo, metrics only
 ```
 
 ---
@@ -145,6 +145,8 @@ This implementation **validates and extends** TF BrandSystem v1.2:
 - Documents icon library standard (Lucide)
 - Provides button size constraints
 - Shows brand identity integration in small spaces
+
+> **Note:** `#d96704` is the canonical Forge Orange. Legacy references to `#F47C26` should be updated.
 
 **Future Products Can:**
 - Use TangentCore Sidebar as reference

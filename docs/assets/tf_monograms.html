@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TF Monogram Variants</title>
+  <style>
+    body {
+      background: #1a1a1a;
+      padding: 40px;
+      font-family: system-ui, sans-serif;
+      color: #ccc;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      max-width: 1400px;
+    }
+    .variant {
+      text-align: center;
+    }
+    .variant h3 {
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .variant p {
+      font-size: 13px;
+      color: #888;
+      margin-top: 12px;
+    }
+    svg {
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+    .code-label {
+      background: #282828;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 12px;
+      margin-top: 8px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="color:#fff; margin-bottom: 32px;">TF Monogram Variants</h1>
+  
+  <div class="grid">
+    
+    <!-- V4 Original -->
+    <div class="variant">
+      <h3>V4 Original</h3>
+      <svg width="256" height="256" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="#F47C26" stroke="none"/>
+      </svg>
+      <div class="code-label">#F47C26</div>
+      <p>Current version</p>
+    </div>
+
+    <!-- V5 Forge Orange -->
+    <div class="variant">
+      <h3>V5 — Forge Orange</h3>
+      <svg width="256" height="256" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="#d96704" stroke="none"/>
+      </svg>
+      <div class="code-label">#d96704</div>
+      <p>Your specified Forge Orange</p>
+    </div>
+
+    <!-- V5 Gradient A: Top-down orange to charcoal -->
+    <div class="variant">
+      <h3>V5 Gradient A — Ember Fade</h3>
+      <svg width="256" height="256" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="emberFade" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#d96704"/>
+            <stop offset="100%" stop-color="#1f1f23"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="url(#emberFade)" stroke="none"/>
+      </svg>
+      <div class="code-label">#d96704 → #1f1f23 (vertical)</div>
+      <p>Top-down fade — "cooling metal"</p>
+    </div>
+
+    <!-- V5 Gradient B: Diagonal -->
+    <div class="variant">
+      <h3>V5 Gradient B — Forge Diagonal</h3>
+      <svg width="256" height="256" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="forgeDiag" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#d96704"/>
+            <stop offset="100%" stop-color="#1f1f23"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="url(#forgeDiag)" stroke="none"/>
+      </svg>
+      <div class="code-label">#d96704 → #1f1f23 (diagonal)</div>
+      <p>Top-left to bottom-right</p>
+    </div>
+
+    <!-- V5 Gradient C: Partial fade (keeps orange prominent) -->
+    <div class="variant">
+      <h3>V5 Gradient C — Charcoal Base</h3>
+      <svg width="256" height="256" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="charcoalBase" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#d96704"/>
+            <stop offset="60%" stop-color="#d96704"/>
+            <stop offset="100%" stop-color="#1f1f23"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="url(#charcoalBase)" stroke="none"/>
+      </svg>
+      <div class="code-label">#d96704 (60%) → #1f1f23</div>
+      <p>Orange dominant, charcoal anchor</p>
+    </div>
+
+    <!-- V5 Gradient D: Reverse (charcoal to orange) -->
+    <div class="variant">
+      <h3>V5 Gradient D — Rising Heat</h3>
+      <svg width="256" height="256" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="risingHeat" x1="0%" y1="100%" x2="0%" y2="0%">
+            <stop offset="0%" stop-color="#1f1f23"/>
+            <stop offset="100%" stop-color="#d96704"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.33L44.817 338.83L44.817 178.847Z" fill="url(#risingHeat)" stroke="none"/>
+      </svg>
+      <div class="code-label">#1f1f23 → #d96704 (bottom-up)</div>
+      <p>Heat rising from base</p>
+    </div>
+
+    <!-- V5 Gradient E: Subtle blend (midpoint mix) -->
+    <div class="variant">
+      <h3>V5 Gradient E — Molten Core</h3>
+      <svg width="256" height="256" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="moltenCore" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#d96704"/>
+            <stop offset="50%" stop-color="#7c3a0a"/>
+            <stop offset="100%" stop-color="#1f1f23"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="url(#moltenCore)" stroke="none"/>
+      </svg>
+      <div class="code-label">#d96704 → #7c3a0a → #1f1f23</div>
+      <p>Three-stop with burnt orange midpoint</p>
+    </div>
+
+    <!-- Small preview at 48x48 and 96x96 -->
+    <div class="variant">
+      <h3>Toolbar Size Test</h3>
+      <div style="display: flex; gap: 24px; justify-content: center; align-items: end;">
+        <div>
+          <svg width="48" height="48" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="1024" height="1024" fill="#282828"/>
+            <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="#d96704" stroke="none"/>
+          </svg>
+          <p style="margin-top:8px">48×48</p>
+        </div>
+        <div>
+          <svg width="96" height="96" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="1024" height="1024" fill="#282828"/>
+            <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="#d96704" stroke="none"/>
+          </svg>
+          <p style="margin-top:8px">96×96</p>
+        </div>
+      </div>
+      <p>Solid orange reads better at small sizes</p>
+    </div>
+
+  </div>
+
+</body>
+</html>

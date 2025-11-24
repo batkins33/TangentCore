@@ -17,6 +17,7 @@ This document outlines the official Tangent Forge v1.2 brand standards applied t
 | **Deep Charcoal** | `#1F1F23` | Secondary/darker background |
 | **Smoked Gray** | `#A8A8A8` | Secondary labels, muted text |
 | **White** | `#FFFFFF` | Primary text on dark backgrounds |
+| **Monogram Background** | `#282828` | Logo/icon background (slightly lighter than Forge Charcoal for contrast) |
 
 ### Semantic Usage
 
@@ -30,6 +31,22 @@ This document outlines the official Tangent Forge v1.2 brand standards applied t
   - White for primary text
   - Smoked Gray for secondary/supporting text
   - Forge Orange for emphasis
+
+### Approved Gradients
+
+For logo and monogram treatments where gradient adds depth:
+
+| Name | Stops | Usage |
+|------|-------|-------|
+| **Ember Core** | `#d96704 → #7c3a0a → #4a2206` | Primary logo gradient (vertical or diagonal) |
+| **Copper Sheen** | `#d96704 → #A67C52 → #5a3a1a` | Alternative metallic finish |
+| **Steel Anchor** | `#d96704 → #5a3a1a → #3a3a3a` | When hard edge contrast needed |
+
+**Gradient Rules:**
+- Never fade to `#1F1F23` or `#2B2D31` — creates "smudge" against backgrounds
+- Terminus must contrast with primary background by ≥15% luminance
+- Solid `#d96704` preferred for icons ≤96px
+- Gradients reserved for hero/large brand moments (256px+)
 
 ---
 

@@ -48,7 +48,8 @@ tangent-forge-utilities/
 
 - **Tangent Forge Brand v1.2**
   - Background: `#2B2D31` (Forge Charcoal)
-  - Accent: `#D96704` (Forge Orange)
+  - Accent: `#d96704` (Forge Orange)
+  - Monogram Background: `#282828` (lifted from primary bg for contrast)
   - Secondary text: `#A8A8A8` (Smoked Gray)
   - Font: Inter (mid-tier fallback)
 - **Tabbed Navigation**: CLEANUP (active), BRAND (disabled), WORKFLOW (disabled)
@@ -59,6 +60,45 @@ tangent-forge-utilities/
 - **Layout**: 24px baseline grid, 16px card radius (TF standards)
 
 ## 🔧 Setup Instructions
+
+### Logo Asset Hosting
+
+For Google Workspace Add-ons and other integrations requiring hosted image URLs:
+
+#### Option A: jsDelivr CDN (Recommended)
+Zero config — works immediately once assets are committed to repo.
+
+```
+https://cdn.jsdelivr.net/gh/tangent-forge/[repo-name]/assets/icon-toolbar.png
+https://cdn.jsdelivr.net/gh/tangent-forge/[repo-name]/assets/logo-full.svg
+```
+
+**Benefits:**
+- No GitHub Pages setup required
+- Proper `Content-Type` headers (unlike raw.githubusercontent.com)
+- Global CDN with caching
+- Version pinning available: `@main`, `@v1.0.0`, or `@[commit-sha]`
+
+#### Option B: GitHub Pages
+If you need custom domain or more control:
+
+1. Enable Pages in repo Settings → Pages → Branch: `main` / `root`
+2. Assets available at: `https://[org].github.io/[repo]/assets/icon.png`
+3. Allow 1-5 min propagation after enabling
+
+#### Why Not Raw GitHub?
+`raw.githubusercontent.com` sends `X-Content-Type-Options: nosniff` headers that block image rendering in Google Workspace manifests and some browsers.
+
+#### Asset Naming Convention
+```
+assets/
+├── icon-toolbar.png      # 96x96 PNG (required for Workspace Add-ons)
+├── icon-toolbar-48.png   # 48x48 PNG (standard density)
+├── logo-full.svg         # Full wordmark for sidebars/headers
+└── monogram.svg          # TF mark only (scalable)
+```
+
+### Installation Steps
 
 1. **Create a new Google Apps Script project**:
    - Go to [script.google.com](https://script.google.com)

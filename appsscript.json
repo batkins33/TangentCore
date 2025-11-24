@@ -22,7 +22,7 @@
   "addOns": {
     "common": {
       "name": "Tangent Forge Utilities",
-      "logoUrl": "https://www.gstatic.com/images/branding/product/1x/drive_48dp.png",
+      "logoUrl": "https://tangent-forge.github.io/utilities/assets/icon-toolbar.png",
       "useLocaleFromApp": true,
       "homepageTrigger": {
         "runFunction": "onDriveHomepage",

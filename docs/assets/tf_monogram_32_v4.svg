@@ -1,0 +1,19 @@
+<!-- Updated TF Monogram (from gemini generate) -->
+<svg width="32" height="32" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="32" height="32" fill="#282828"/>
+  <path d="
+    M 44.8 178.8 
+    L 948.9 178.8 
+    L 877.4 332.2 
+    H 499.6 
+    V 477.6 
+    H 794.2 
+    L 725.0 626.0 
+    H 502.5 
+    V 830.0 
+    L 354.5 932.9 
+    V 338.8 
+    H 44.8 
+    Z" 
+    fill="#F47C26" stroke="none"/>
+</svg>

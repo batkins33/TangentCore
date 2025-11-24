@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TF Monogram V2 - Doc-Compliant Gradients</title>
+  <style>
+    body {
+      background: #1a1a1a;
+      padding: 40px;
+      font-family: Inter, system-ui, sans-serif;
+      color: #ccc;
+    }
+    h1 { color: #fff; margin-bottom: 12px; }
+    .subtitle { color: #A8A8A8; margin-bottom: 32px; font-size: 14px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      max-width: 1400px;
+    }
+    .variant {
+      text-align: center;
+      background: #2B2D31;
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid #3a3a3a;
+    }
+    .variant h3 {
+      margin: 0 0 16px 0;
+      color: #fff;
+      font-size: 16px;
+    }
+    .variant p {
+      font-size: 12px;
+      color: #A8A8A8;
+      margin: 12px 0 0 0;
+      line-height: 1.5;
+    }
+    svg {
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+    .code-block {
+      background: #1F1F23;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      margin-top: 12px;
+      display: inline-block;
+      color: #d96704;
+    }
+    .recommendation {
+      background: linear-gradient(135deg, #0A4D5C 0%, #1098AD 100%);
+      border: 2px solid #1098AD;
+    }
+    .recommendation h3::after {
+      content: " ⭐";
+    }
+    .size-test {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      align-items: end;
+      margin-top: 16px;
+    }
+    .size-label {
+      font-size: 11px;
+      color: #A8A8A8;
+      margin-top: 8px;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #3a3a3a;
+      margin: 40px 0;
+    }
+    .section-title {
+      color: #d96704;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+    }
+  </style>
+</head>
+<body>
+  <h1>TF Monogram — Gradient Refinements</h1>
+  <p class="subtitle">Fixing the "smudge" problem with doc-compliant color transitions</p>
+
+  <p class="section-title">Solid Reference</p>
+  <div class="grid">
+    
+    <!-- Solid Forge Orange (baseline) -->
+    <div class="variant">
+      <h3>Solid Forge Orange</h3>
+      <svg width="200" height="200" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <rect width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="#d96704"/>
+      </svg>
+      <div class="code-block">#d96704</div>
+      <p>Your specified brand color. Best for small toolbar icons.</p>
+    </div>
+
+  </div>
+
+  <hr>
+  <p class="section-title">Option A: Ember Family (Orange → Burnt → Deep Brown)</p>
+  
+  <div class="grid">
+
+    <!-- Ember Vertical -->
+    <div class="variant">
+      <h3>Ember Fade — Vertical</h3>
+      <svg width="200" height="200" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="emberV" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#d96704"/>
+            <stop offset="100%" stop-color="#4a2206"/>
+          </linearGradient>
+        </defs>
+        <rect width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="url(#emberV)"/>
+      </svg>
+      <div class="code-block">#d96704 → #4a2206</div>
+      <p>Stays in orange family. Darkens but remains distinct from charcoal bg.</p>
+    </div>
+
+    <!-- Ember 3-stop -->
+    <div class="variant recommendation">
+      <h3>Ember Core — 3-Stop</h3>
+      <svg width="200" height="200" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ember3" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#d96704"/>
+            <stop offset="50%" stop-color="#7c3a0a"/>
+            <stop offset="100%" stop-color="#4a2206"/>
+          </linearGradient>
+        </defs>
+        <rect width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="url(#ember3)"/>
+      </svg>
+      <div class="code-block">#d96704 → #7c3a0a → #4a2206</div>
+      <p>Smooth transition through burnt orange midpoint. Depth without smudge.</p>
+    </div>
+
+    <!-- Ember Diagonal -->
+    <div class="variant">
+      <h3>Ember Diagonal</h3>
+      <svg width="200" height="200" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="emberD" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#d96704"/>
+            <stop offset="100%" stop-color="#4a2206"/>
+          </linearGradient>
+        </defs>
+        <rect width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="url(#emberD)"/>
+      </svg>
+      <div class="code-block">#d96704 → #4a2206 (diagonal)</div>
+      <p>Follows T→F reading flow. Dynamic but controlled.</p>
+    </div>
+
+  </div>
+
+  <hr>
+  <p class="section-title">Option B: Copper Transition (Per Brand Docs)</p>
+  
+  <div class="grid">
+
+    <!-- Copper Sheen -->
+    <div class="variant">
+      <h3>Forge to Copper</h3>
+      <svg width="200" height="200" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="copper1" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#d96704"/>
+            <stop offset="100%" stop-color="#8B5A3C"/>
+          </linearGradient>
+        </defs>
+        <rect width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="url(#copper1)"/>
+      </svg>
+      <div class="code-block">#d96704 → #8B5A3C</div>
+      <p>Uses Dark Copper from your docs. Warm metallic finish.</p>
+    </div>
+
+    <!-- Copper 3-stop -->
+    <div class="variant">
+      <h3>Copper Sheen 3-Stop</h3>
+      <svg width="200" height="200" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="copper3" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#d96704"/>
+            <stop offset="50%" stop-color="#A67C52"/>
+            <stop offset="100%" stop-color="#5a3a1a"/>
+          </linearGradient>
+        </defs>
+        <rect width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="url(#copper3)"/>
+      </svg>
+      <div class="code-block">#d96704 → #A67C52 → #5a3a1a</div>
+      <p>Passes through Copper Sheen midpoint. Rich metallic depth.</p>
+    </div>
+
+    <!-- Copper Diagonal -->
+    <div class="variant">
+      <h3>Copper Diagonal</h3>
+      <svg width="200" height="200" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="copperD" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#d96704"/>
+            <stop offset="60%" stop-color="#A67C52"/>
+            <stop offset="100%" stop-color="#5a3a1a"/>
+          </linearGradient>
+        </defs>
+        <rect width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="url(#copperD)"/>
+      </svg>
+      <div class="code-block">#d96704 → #A67C52 → #5a3a1a</div>
+      <p>Diagonal with extended copper midpoint. Premium feel.</p>
+    </div>
+
+  </div>
+
+  <hr>
+  <p class="section-title">Option C: Steel Anchor (Contrast Endpoint)</p>
+  
+  <div class="grid">
+
+    <!-- Steel anchor -->
+    <div class="variant">
+      <h3>Forge to Steel</h3>
+      <svg width="200" height="200" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="steel1" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#d96704"/>
+            <stop offset="50%" stop-color="#5a3a1a"/>
+            <stop offset="100%" stop-color="#3a3a3a"/>
+          </linearGradient>
+        </defs>
+        <rect width="1024" height="1024" fill="#282828"/>
+        <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="url(#steel1)"/>
+      </svg>
+      <div class="code-block">#d96704 → #5a3a1a → #3a3a3a</div>
+      <p>Ends at Steel Gray (doc-approved border color). Clear boundary.</p>
+    </div>
+
+  </div>
+
+  <hr>
+  <p class="section-title">Size Test — Toolbar Preview</p>
+  
+  <div class="grid">
+    <div class="variant" style="grid-column: span 2;">
+      <h3>Comparison at Toolbar Sizes</h3>
+      <div class="size-test">
+        <div>
+          <svg width="48" height="48" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <rect width="1024" height="1024" fill="#282828"/>
+            <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="#d96704"/>
+          </svg>
+          <p class="size-label">Solid 48px</p>
+        </div>
+        <div>
+          <svg width="48" height="48" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ember3s" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#d96704"/>
+                <stop offset="50%" stop-color="#7c3a0a"/>
+                <stop offset="100%" stop-color="#4a2206"/>
+              </linearGradient>
+            </defs>
+            <rect width="1024" height="1024" fill="#282828"/>
+            <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="url(#ember3s)"/>
+          </svg>
+          <p class="size-label">Ember 48px</p>
+        </div>
+        <div>
+          <svg width="96" height="96" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <rect width="1024" height="1024" fill="#282828"/>
+            <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="#d96704"/>
+          </svg>
+          <p class="size-label">Solid 96px</p>
+        </div>
+        <div>
+          <svg width="96" height="96" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ember3m" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#d96704"/>
+                <stop offset="50%" stop-color="#7c3a0a"/>
+                <stop offset="100%" stop-color="#4a2206"/>
+              </linearGradient>
+            </defs>
+            <rect width="1024" height="1024" fill="#282828"/>
+            <path d="M44.817 178.847L948.915 178.847L854.471 332.224H499.619L499.619 477.616L794.176 477.616L713.365 625.982H502.539L502.539 815.889L354.534 932.856L354.534 338.83L44.817 338.83L44.817 178.847Z" fill="url(#ember3m)"/>
+          </svg>
+          <p class="size-label">Ember 96px</p>
+        </div>
+      </div>
+      <p style="margin-top: 16px;">At 48px, gradients lose subtlety. Solid recommended for toolbar PNG.</p>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -115,6 +115,21 @@ Orange should be used **sparingly and intentionally** — it's a powerful accent
 - Badges: Small, contained
 - If it's bigger than your palm on screen → too much orange
 
+### Logo & Monogram Treatment
+
+**Solid (default):**
+- Use `#d96704` for toolbar icons, favicons, small contexts
+- Max effectiveness at ≤96px
+
+**Gradient (large formats):**
+- Use Ember Core gradient: `#d96704 → #7c3a0a → #4a2206`
+- Apply for sidebar headers, hero sections, print materials
+- Direction: vertical (top→bottom) or diagonal (TL→BR)
+
+**Background:**
+- Monogram uses `#282828` (not `#2B2D31`) for subtle lift from page bg
+- Ensures gradient terminus `#4a2206` remains visible
+
 ---
 
 ## 🧩 Application-Specific Guidance
