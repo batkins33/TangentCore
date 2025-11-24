@@ -565,6 +565,24 @@
       </div>
     </div>
 
+    <!-- Fixed Footer (Action Bar) -->
+    <div id="footer" class="hidden">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="selection-count">
+          <span id="selected-count-footer">0</span> files selected
+        </div>
+        <button
+          id="dismiss-btn-footer"
+          class="btn-primary"
+          onclick="dismissSelected()"
+          disabled
+          style="margin: 0;"
+        >
+          <span>Dismiss (Safe Hide)</span>
+        </button>
+      </div>
+    </div>
+
     <script>
       // Tab switching (only Cleanup is active)
       // Tab switching
@@ -591,10 +609,13 @@
       
       // Start the scan
       function startScan() {
-        // Disable button
+        // Update button to scanning state
         var btn = document.getElementById("scan-btn");
         btn.disabled = true;
+        btn.style.background = "#555"; // Grey background
+        btn.style.boxShadow = "none";
         btn.innerHTML = '\u003ci data-lucide="loader" style="width: 16px; height: 16px; animation: spin 1s linear infinite;"\u003e\u003c/i\u003e\u003cspan\u003eScanning...\u003c/span\u003e';
+        lucide.createIcons();
 
         // Hide results, show loading
         document.getElementById("results-area").classList.add("hidden");
@@ -612,11 +633,13 @@
         // Store data globally
         scannedFiles = data.fileList || [];
         
-        // Re-enable button
+        // Reset button to completed state
         var btn = document.getElementById("scan-btn");
         btn.disabled = false;
+        btn.style.background = ""; // Reset to CSS default
+        btn.style.boxShadow = "";
         btn.innerHTML =
-          '\u003ci data-lucide="search" style="width: 16px; height: 16px;"\u003e\u003c/i\u003e\u003cspan\u003eStart Site Survey\u003c/span\u003e';
+          '\u003ci data-lucide="check-circle" style="width: 16px; height: 16px;"\u003e\u003c/i\u003e\u003cspan\u003eScan Complete\u003c/span\u003e';
         lucide.createIcons();
 
         // Hide loading
@@ -629,9 +652,6 @@
         // Build file list HTML
         var fileListHTML = "";
         
-        // Note: CleanupModule returns stats, not individual files
-        // We need to update CleanupModule to return file data, or use a different approach
-        // For now, show a message
         if (!scannedFiles.length) {
           fileListHTML = '\u003cdiv style="padding: 20px; text-align: center; color: #a8a8a8;"\u003e' +
             '\u003cp\u003eNo files available for selection.\u003c/p\u003e' +
@@ -647,7 +667,8 @@
               '  \u003cdiv class="file-info"\u003e' +
               '    \u003cdiv class="file-name"\u003e' + escapeHtml(file.name) + '\u003c/div\u003e' +
               '    \u003cdiv class="file-meta"\u003e' + formatFileSize(file.size) + ' • ' + (file.mimeType || 'Unknown type') + '\u003c/div\u003e' +
-                '\u003c/div\u003e\n      \u003c/div\u003e\n    \u003c/div\u003e\n    \u003c/div\u003e\n    \u003c!-- End scroll-container --\u003e\n\n    \u003c!-- Fixed Footer (Action Bar) --\u003e\n    \u003cdiv id=\"footer\" class=\"hidden\"\u003e\n      \u003cdiv style=\"display: flex; justify-content: space-between; align-items: center;\"\u003e\n        \u003cdiv class=\"selection-count\"\u003e\n          \u003cspan id=\"selected-count\"\u003e0\u003c/span\u003e files selected\n        \u003c/div\u003e\n        \u003cbutton\n          id=\"dismiss-btn-footer\"\n          class=\"btn-primary\"\n          onclick=\"dismissSelected()\"\n          disabled\n          style=\"margin: 0;\"\n        \u003e\n          \u003cspan\u003eDismiss (Safe Hide)\u003c/span\u003e\n        \u003c/button\u003e\n      \u003c/div\u003e\n    \u003c/div\u003e';
+              '  \u003c/div\u003e' +
+              '\u003c/div\u003e';
           });
         }
 
@@ -656,9 +677,9 @@
         // Show results area
         document.getElementById("results-area").classList.remove("hidden");
         
-        // Show action bar if we have files
+        // Show footer if we have files
         if (scannedFiles.length > 0) {
-          document.getElementById("action-bar").classList.remove("hidden");
+          document.getElementById("footer").classList.remove("hidden");
         }
         
         // Re-render icons
@@ -675,8 +696,12 @@
           if (cb.checked) selectedCount++;
         });
         
-        document.getElementById('selected-count').textContent = selectedCount;
-        document.getElementById('dismiss-btn').disabled = selectedCount === 0;
+        // Update footer counter
+        document.getElementById('selected-count-footer').textContent = selectedCount;
+        
+        // Update footer button state
+        var footerBtn = document.getElementById('dismiss-btn-footer');
+        footerBtn.disabled = selectedCount === 0;
       }
 
       // ========== DISMISS WORKFLOW ==========
