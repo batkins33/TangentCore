@@ -1,0 +1,31 @@
+{
+  "name": "tangent-core",
+  "version": "1.0.0",
+  "description": "Tangent Forge Utilities - Google Workspace Add-on",
+  "main": "Code.gs",
+  "scripts": {
+    "switch:free": "copy .clasp-free.json .clasp.json && echo 'Switched to FREE Tier'",
+    "switch:pro": "copy .clasp-pro.json .clasp.json && echo 'Switched to PRO Tier'",
+    "deploy:free": "npm run switch:free && clasp push",
+    "deploy:pro": "npm run switch:pro && clasp push"
+  },
+  "keywords": [
+    "google-apps-script",
+    "add-on",
+    "tangent-forge"
+  ],
+  "author": "Tangent Forge",
+  "license": "ISC",
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/batkins33/TangentCore.git"
+  },
+  "bugs": {
+    "url": "https://github.com/batkins33/TangentCore/issues"
+  },
+  "homepage": "https://github.com/batkins33/TangentCore#readme"
+}
