@@ -29,8 +29,8 @@ var CleanupModule = (function () {
         Other: 0,
       };
 
-      // Alpha version hard cap
-      var MAX_FILES = 500;
+      // Get file limit from ConfigModule (allows dynamic configuration)
+      var MAX_FILES = ConfigModule.get("MAX_FILES");
       var continuationToken = null;
       var hasMore = true;
 
