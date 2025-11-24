@@ -162,7 +162,7 @@ function route(action, payload) {
       error: "System Error: " + error.toString(),
     };
   }
-}}
+}
 
 // ========== DRIVE ADD-ON HANDLERS ==========
 
@@ -176,26 +176,28 @@ function onDriveHomepage(e) {
     .setHeader(
       CardService.newCardHeader()
         .setTitle("Tangent Forge Utilities")
-        .setImageUrl("https://www.gstatic.com/images/branding/product/1x/drive_48dp.png")
+        .setImageUrl(
+          "https://www.gstatic.com/images/branding/product/1x/drive_48dp.png"
+        )
     )
     .addSection(
       CardService.newCardSection()
         .setHeader("TF Site Survey")
         .addWidget(
-          CardService.newTextParagraph()
-            .setText("Scan shared files and safely dismiss clutter.")
+          CardService.newTextParagraph().setText(
+            "Scan shared files and safely dismiss clutter."
+          )
         )
         .addWidget(
           CardService.newTextButton()
             .setText("Launch Survey")
             .setOnClickAction(
-              CardService.newAction()
-                .setFunctionName("showSidebar")
+              CardService.newAction().setFunctionName("showSidebar")
             )
         )
     )
     .build();
-  
+
   return [card];
 }
 
@@ -206,33 +208,36 @@ function onDriveHomepage(e) {
  */
 function onDriveItemsSelected(e) {
   var items = e.drive.selectedItems;
-  
+
   // Check if exactly 1 item is selected
   if (!items || items.length !== 1) {
     return buildErrorCard("Please select exactly one folder.");
   }
-  
+
   var item = items[0];
-  
+
   // Check if it's a folder
   if (item.mimeType !== "application/vnd.google-apps.folder") {
     return buildErrorCard("Please select a folder (not a file).");
   }
-  
+
   // Build the manifest card for the selected folder
   var card = CardService.newCardBuilder()
     .setHeader(
       CardService.newCardHeader()
         .setTitle("Generate Manifest")
         .setSubtitle(item.title)
-        .setImageUrl("https://www.gstatic.com/images/branding/product/1x/sheets_48dp.png")
+        .setImageUrl(
+          "https://www.gstatic.com/images/branding/product/1x/sheets_48dp.png"
+        )
     )
     .addSection(
       CardService.newCardSection()
         .setHeader("Project Manifest Generator")
         .addWidget(
-          CardService.newTextParagraph()
-            .setText("Create a spreadsheet listing all files in this folder.")
+          CardService.newTextParagraph().setText(
+            "Create a spreadsheet listing all files in this folder."
+          )
         )
         .addWidget(
           CardService.newTextButton()
@@ -240,12 +245,12 @@ function onDriveItemsSelected(e) {
             .setOnClickAction(
               CardService.newAction()
                 .setFunctionName("generateManifestForFolder")
-                .setParameters({folderId: item.id})
+                .setParameters({ folderId: item.id })
             )
         )
     )
     .build();
-  
+
   return [card];
 }
 
@@ -256,19 +261,14 @@ function onDriveItemsSelected(e) {
  */
 function buildErrorCard(message) {
   var card = CardService.newCardBuilder()
-    .setHeader(
-      CardService.newCardHeader()
-        .setTitle("Tangent Forge")
-    )
+    .setHeader(CardService.newCardHeader().setTitle("Tangent Forge"))
     .addSection(
-      CardService.newCardSection()
-        .addWidget(
-          CardService.newTextParagraph()
-            .setText(message)
-        )
+      CardService.newCardSection().addWidget(
+        CardService.newTextParagraph().setText(message)
+      )
     )
     .build();
-  
+
   return [card];
 }
 
@@ -279,30 +279,33 @@ function buildErrorCard(message) {
  */
 function generateManifestForFolder(e) {
   var folderId = e.parameters.folderId;
-  
+
   try {
     var result = ManifestModule.generateManifestForFolder(folderId);
-    
+
     if (result.success) {
-      var notification = CardService.newNotification()
-        .setText("✓ Manifest created successfully!");
-      
+      var notification = CardService.newNotification().setText(
+        "✓ Manifest created successfully!"
+      );
+
       var actionResponse = CardService.newActionResponseBuilder()
         .setNotification(notification)
-        .setOpenLink(CardService.newOpenLink()
-          .setUrl(result.url)
-          .setOpenAs(CardService.OpenAs.FULL_SIZE)
+        .setOpenLink(
+          CardService.newOpenLink()
+            .setUrl(result.url)
+            .setOpenAs(CardService.OpenAs.FULL_SIZE)
         )
         .build();
-      
+
       return actionResponse;
     } else {
       throw new Error(result.error);
     }
   } catch (error) {
-    var notification = CardService.newNotification()
-      .setText("Error: " + error.message);
-    
+    var notification = CardService.newNotification().setText(
+      "Error: " + error.message
+    );
+
     return CardService.newActionResponseBuilder()
       .setNotification(notification)
       .build();
