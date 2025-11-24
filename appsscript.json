@@ -16,6 +16,26 @@
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/script.container.ui",
     "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/documents"
-  ]
+    "https://www.googleapis.com/auth/documents",
+    "https://www.googleapis.com/auth/drive.addons.metadata.readonly"
+  ],
+  "addOns": {
+    "common": {
+      "name": "Tangent Forge Utilities",
+      "logoUrl": "https://www.gstatic.com/images/branding/product/1x/drive_48dp.png",
+      "useLocaleFromApp": true,
+      "homepageTrigger": {
+        "runFunction": "onDriveHomepage",
+        "enabled": true
+      }
+    },
+    "drive": {
+      "homepageTrigger": {
+        "runFunction": "onDriveHomepage"
+      },
+      "onItemsSelectedTrigger": {
+        "runFunction": "onDriveItemsSelected"
+      }
+    }
+  }
 }

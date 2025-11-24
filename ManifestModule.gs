@@ -149,8 +149,82 @@ var ManifestModule = (function () {
     }
   }
 
+  /**
+   * Generates a manifest for a specific Drive folder
+   * Used by Drive add-on when user selects a folder
+   * @param {string} folderId -  Drive folder ID
+   * @returns {Object} Standard response object with URL
+   */
+  function generateManifestForFolder(folderId) {
+    try {
+      // Get the folder
+      var folder = DriveApp.getFolderById(folderId);
+      var folderName = folder.getName();
+
+      // Create new spreadsheet
+      var newSheetName =
+        "Manifest - " + folderName + " - " + new Date().toLocaleDateString();
+      var newSpreadsheet = SpreadsheetApp.create(newSheetName);
+      var sheet = newSpreadsheet.getActiveSheet();
+      sheet.setName("Manifest Report");
+
+      // Scan folder files (Limit 100 for initial version)
+      var files = folder.getFiles();
+      var fileData = [];
+      var limit = 100;
+      var count = 0;
+
+      while (files.hasNext() && count < limit) {
+        var file = files.next();
+        fileData.push([
+          file.getName(),
+          file.getMimeType(),
+          (file.getSize() / 1024 / 1024).toFixed(2), // Size in MB
+          file.getLastUpdated(),
+          file.getUrl(),
+        ]);
+        count++;
+      }
+
+      var headers = [
+        ["File Name", "Type", "Size (MB)", "Last Updated", "Link"],
+      ];
+
+      // Write Headers
+      sheet.getRange(1, 1, 1, 5).setValues(headers);
+
+      // Write Data
+      if (fileData.length > 0) {
+        sheet.getRange(2, 1, fileData.length, 5).setValues(fileData);
+      }
+
+      // Formatting
+      var headerRange = sheet.getRange(1, 1, 1, 5);
+      headerRange
+        .setBackground("#F47C26") // Forge Orange
+        .setFontColor("#FFFFFF")
+        .setFontWeight("bold");
+
+      sheet.setFrozenRows(1);
+      sheet.autoResizeColumns(1, 5);
+
+      return {
+        success: true,
+        message: "Manifest created with " + count + " files from " + folderName,
+        url: newSpreadsheet.getUrl(),
+      };
+    } catch (error) {
+      console.error("Manifest Error:", error);
+      return {
+        success: false,
+        error: error.toString(),
+      };
+    }
+  }
+
   // Public API
   return {
     generateManifest: generateManifest,
+    generateManifestForFolder: generateManifestForFolder,
   };
 })();
